@@ -30,8 +30,10 @@ public class CompetitionListActivity extends AppCompatActivity {
     private static final int AddCompetitionRequestValue = 0;
     private static final int EditCompetitionRequestValue = 1;
 
-    private GodScrappyDog god;
-    private List<Event> eventList;
+    private static ArrayList<List<String>> event_competitions = new ArrayList<List<String>>() {{
+        add(Arrays.asList("Wave"));
+        add(Arrays.asList("Advanced", "Intermediate", "Beginner", "Freestyle", "Team"));
+    }};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,18 +55,15 @@ public class CompetitionListActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        this.god = GodScrappyDog.letMeAtEm();
-
         ListView competitionListView = (ListView) findViewById(R.id.competitionsListView);
 
         // get the eventID passed from the activity calling us
         int eventID = getIntent().getIntExtra("eventID", -1);
         Log.d(getLocalClassName(), "eventID: " + eventID);
 
-        if (eventID > -1) {
-            List<Competition> competitions = null;
-            ArrayAdapter<String> competitionsAdapter =
-                    new ArrayAdapter<String>(competitionListView.getContext(),
+        if (eventID > -1 && eventID < event_competitions.size()) {
+            List<String> competitions = event_competitions.get(eventID);
+            ArrayAdapter<String> competitionsAdapter = new ArrayAdapter<String>(competitionListView.getContext(),
                     android.R.layout.simple_list_item_1, competitions);
 
             competitionListView.setAdapter(competitionsAdapter);

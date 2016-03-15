@@ -21,9 +21,11 @@ public class GodScrappyDog {
     private SeasonList seasonList;
 
     private List<CompetitionType> competitionTypeList;
+    private Store store;
 
     private GodScrappyDog() {
         this.createMockData();
+        this.store = new SqliteStore();
     }
 
     public static GodScrappyDog letMeAtEm() {
@@ -33,6 +35,10 @@ public class GodScrappyDog {
 
         GodScrappyDog.puppy = new GodScrappyDog();
         return GodScrappyDog.puppy;
+    }
+
+    public Store getStore() {
+        return this.store;
     }
 
     public SeasonList getSeasonList() {

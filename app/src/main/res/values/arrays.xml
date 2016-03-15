@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="competition_type">
+        <item>Select type</item>
+        <item>Beginner</item>
+        <item>Intermediate</item>
+        <item>Advanced</item>
+        <item>Team</item>
+        <item>Freestyle</item>
+        <item>Wave</item>
+    </string-array>
+    <string-array name="competition_heat">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>Quarter-final</item>
+        <item>Semi-final</item>
+        <item>Final</item>
+    </string-array>
+    <string-array name="edit_delete">
+        <item>Edit</item>
+        <item>Delete</item>
+    </string-array>
+</resources>

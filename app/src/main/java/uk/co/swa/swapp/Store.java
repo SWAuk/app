@@ -6,17 +6,17 @@ import uk.co.swa.swapp.model.*;
 public interface Store {
 
     public List<Season> getSeasons();
-    public Season getSeason( int id );
+    public Season getSeason( long id );
     public List<Event> getEvents( Season season );
-    public Event getEvent( int id );
+    public Event getEvent( long id );
     public List<CompetitionType> getCompetitionTypes();
-    public CompetitionType getCompetitionType( int id );
+    public CompetitionType getCompetitionType( long id );
     public List<Competition> getCompetitions( Event event );
-    public Competition getCompetition( int id );
+    public Competition getCompetition( long id );
     public List<Member> getMembers();
-    public Member getMember( int id );
+    public Member getMember( long id );
     public List<University> getUniversities();
-    public University getUniversity( int id );
+    public University getUniversity( long id );
     public List<Member> getEventAttendees( Event event );
 
 }

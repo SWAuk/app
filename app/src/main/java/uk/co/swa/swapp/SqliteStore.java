@@ -16,7 +16,7 @@ public class SQLiteStore implements Store {
     }
 
     @Override
-    public Season getSeason(int id) {
+    public Season getSeason(long id) {
         return null;
     }
 
@@ -26,7 +26,7 @@ public class SQLiteStore implements Store {
     }
 
     @Override
-    public Event getEvent(int id) {
+    public Event getEvent(long id) {
         return null;
     }
 
@@ -36,7 +36,7 @@ public class SQLiteStore implements Store {
     }
 
     @Override
-    public CompetitionType getCompetitionType(int id) {
+    public CompetitionType getCompetitionType(long id) {
         return null;
     }
 
@@ -46,7 +46,7 @@ public class SQLiteStore implements Store {
     }
 
     @Override
-    public Competition getCompetition(int id) {
+    public Competition getCompetition(long id) {
         return null;
     }
 
@@ -56,7 +56,7 @@ public class SQLiteStore implements Store {
     }
 
     @Override
-    public Member getMember(int id) {
+    public Member getMember(long id) {
         return null;
     }
 
@@ -66,7 +66,7 @@ public class SQLiteStore implements Store {
     }
 
     @Override
-    public University getUniversity(int id) {
+    public University getUniversity(long id) {
         return null;
     }
 

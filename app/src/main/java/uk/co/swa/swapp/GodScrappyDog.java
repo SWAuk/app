@@ -13,11 +13,11 @@ import uk.co.swa.swapp.model.TeamCompetition;
 import uk.co.swa.swapp.model.University;
 
 /**
- * Created by oliver on 14/03/2016.
+ * This is the app's God Class.
  */
 public class GodScrappyDog {
 
-    private static GodScrappyDog puppy = null;
+    private static GodScrappyDog instance = null;
     private SeasonList seasonList;
 
     private List<CompetitionType> competitionTypeList;
@@ -25,16 +25,16 @@ public class GodScrappyDog {
 
     private GodScrappyDog() {
         this.createMockData();
-        this.store = new SqliteStore();
+        this.store = new SQLiteStore();
     }
 
     public static GodScrappyDog letMeAtEm() {
-        if (GodScrappyDog.puppy != null) {
-            return GodScrappyDog.puppy;
+        if (GodScrappyDog.instance != null) {
+            return GodScrappyDog.instance;
         }
 
-        GodScrappyDog.puppy = new GodScrappyDog();
-        return GodScrappyDog.puppy;
+        GodScrappyDog.instance = new GodScrappyDog();
+        return GodScrappyDog.instance;
     }
 
     public Store getStore() {

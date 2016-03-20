@@ -9,7 +9,7 @@ import uk.co.swa.swapp.model.Member;
 import uk.co.swa.swapp.model.Season;
 import uk.co.swa.swapp.model.University;
 
-public class SqliteStore implements Store {
+public class SQLiteStore implements Store {
     @Override
     public List<Season> getSeasons() {
         return null;

@@ -145,18 +145,12 @@ public class MockDataStore implements Store {
     }
 
     private void populateCompetitionTypeList() {
-
-        List<CompetitionType> competitionTypes = new ArrayList<>();
-
-        competitionTypes.add(new CompetitionType(1, "Beginner", IndividualCompetition.class));
-        competitionTypes.add(new CompetitionType(2, "Intermediate", IndividualCompetition.class));
-        competitionTypes.add(new CompetitionType(3, "Advanced", IndividualCompetition.class));
-        competitionTypes.add(new CompetitionType(4, "Freestyle", IndividualCompetition.class));
-        competitionTypes.add(new CompetitionType(5, "Team", TeamCompetition.class));
-        competitionTypes.add(new CompetitionType(6, "Wave", IndividualCompetition.class));
-
-        this.competitionTypeList.addAll(competitionTypes);
-
+        this.competitionTypeList.add(new CompetitionType(1, "Beginner"));
+        this.competitionTypeList.add(new CompetitionType(2, "Intermediate"));
+        this.competitionTypeList.add(new CompetitionType(3, "Advanced"));
+        this.competitionTypeList.add(new CompetitionType(4, "Freestyle"));
+        this.competitionTypeList.add(new CompetitionType(5, "Team"));
+        this.competitionTypeList.add(new CompetitionType(6, "Wave"));
     }
 
     private void populateUniversityList() {

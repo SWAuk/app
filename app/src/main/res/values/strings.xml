@@ -7,4 +7,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="season_list_view">Season ListView</string>
+    <string name="event_list_view">Event ListView</string>
+    <string name="competition_list_view">Competition ListView</string>
+    <string name="competitor_list_view">Competitor ListView</string>
 </resources>

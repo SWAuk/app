@@ -38,7 +38,7 @@ public class CompetitorListActivity extends AppCompatActivity {
         ListView compListView = (ListView) findViewById(R.id.competitorsListView);
 
         // get the competitionID passed from the activity calling us
-        int competitionID = getIntent().getIntExtra("competitionID", -1);
+        int competitionID = (int) getIntent().getLongExtra("competitionID", -1);
         Log.d(getLocalClassName(), "competitionID: " + competitionID);
 
         if (competitionID > -1 && competitionID < event_competitors.length) {

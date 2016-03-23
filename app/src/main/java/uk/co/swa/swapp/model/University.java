@@ -3,26 +3,17 @@ package uk.co.swa.swapp.model;
 /**
  * Created by oliver on 15/03/2016.
  */
-public class University {
+public class University extends SwaObject {
 
-    private int id;
     private String universityName;
 
-    public University(int id, String universityName) {
-        this.id = id;
+    public University(long appID, String universityName) {
+        super(appID);
         this.universityName = universityName;
     }
 
     public University(String universityName) {
         this(-1, universityName);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getUniversityName() {

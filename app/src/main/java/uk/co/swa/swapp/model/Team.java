@@ -3,29 +3,19 @@ package uk.co.swa.swapp.model;
 /**
  * Created by oliver on 14/03/2016.
  */
-public class Team {
-    private int teamId;
+public class Team extends SwaObject{
+
     private University university;
     private int teamNumber;
 
-    public Team(int teamId, University university, int teamNumber) {
-        this.teamId = teamId;
+    public Team(long appID, University university, int teamNumber) {
+        super(appID);
         this.university = university;
         this.teamNumber = teamNumber;
     }
 
     public Team(University university, int teamNumber) {
-        this.teamId = 0;
-        this.university = university;
-        this.teamNumber = teamNumber;
-    }
-
-    public int getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(int teamId) {
-        this.teamId = teamId;
+        this(-1, university, teamNumber);
     }
 
     public University getUniversity() {

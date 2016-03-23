@@ -1,38 +1,23 @@
 package uk.co.swa.swapp.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import uk.co.swa.swapp.GodScrappyDog;
+import uk.co.swa.swapp.God;
 
 /**
  * Created by oliver on 14/03/2016.
  */
-public abstract class Competition {
+public abstract class Competition extends SwaObject {
 
-    protected int competitionId;
     protected CompetitionType competitionType;
-    protected List <Heat> heatList;
 
-    protected static GodScrappyDog puppy = GodScrappyDog.letMeAtEm();
+    protected static God god = God.getInstance();
 
-    public Competition(int competitionId, CompetitionType competitionType, List<Heat> heats) {
-        this.competitionId = competitionId;
+    public Competition(long appID, CompetitionType competitionType) {
+        super(appID);
         this.competitionType = competitionType;
-        this.heatList = heats;
-    }
-
-    public Competition(int competitionId, CompetitionType competitionType) {
-        this(competitionId, competitionType, new ArrayList<Heat>());
     }
 
     public Competition(CompetitionType competitionType) {
-        this(-1, competitionType, new ArrayList<Heat>());
-    }
-
-    public Competition(CompetitionType competitionType, List<Heat> heats) {
-        this(-1, competitionType, heats);
+        this(-1, competitionType);
     }
 
     public CompetitionType getCompetitionType() {
@@ -43,33 +28,33 @@ public abstract class Competition {
         this.competitionType = competitionType;
     }
 
-    public Heat getHeat(int index) {
-        return this.heatList.get(index);
-    }
+//    public Heat getHeat(int index) {
+//        return this.heatList.get(index);
+//    }
 
-    public List<Heat> getAllHeats() {
-        return this.heatList;
-    }
+//    public List<Heat> getAllHeats() {
+//        return this.heatList;
+//    }
 
-    public boolean addHeat(Heat... heat) {
-        return this.heatList.addAll(Arrays.asList(heat));
-    }
+//    public boolean addHeat(Heat... heat) {
+//        return this.heatList.addAll(Arrays.asList(heat));
+//    }
 
-    public boolean addHeats(ArrayList<Heat> heats) {
-        return this.heatList.addAll(heats);
-    }
+//    public boolean addHeats(ArrayList<Heat> heats) {
+//        return this.heatList.addAll(heats);
+//    }
 
-    public boolean removeHeat(Heat heat) {
-        return this.heatList.remove(heat);
-    }
+//    public boolean removeHeat(Heat heat) {
+//        return this.heatList.remove(heat);
+//    }
 
-    public Heat removeHeat(int index){
-        return this.heatList.remove(index);
-    }
+//    public Heat removeHeat(int index){
+//        return this.heatList.remove(index);
+//    }
 
-    public boolean removeHeats(List<Heat> heats) {
-        return this.heatList.removeAll(heats);
-    }
+//    public boolean removeHeats(List<Heat> heats) {
+//        return this.heatList.removeAll(heats);
+//    }
 
     // TODO: implement calculateResults?
 

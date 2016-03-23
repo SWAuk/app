@@ -13,6 +13,7 @@
     tools:showIn="@layout/activity_event_list">
 
     <ListView
+        android:tag="@string/event_list_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/eventsListView"

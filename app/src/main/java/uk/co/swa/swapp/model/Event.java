@@ -7,32 +7,17 @@ import java.util.List;
 /**
  * Created by oliver on 12/03/2016.
  */
-public class Event {
+public class Event extends SwaObject {
 
-    private int id;
     private String eventName;
-    private List<Competition> competitionList;
 
-    public Event(int id, String eventName, List<Competition> competitionList) {
-        this.id = id;
+    public Event(long appID, String eventName) {
+        super(appID);
         this.eventName = eventName;
-        this.competitionList = competitionList;
     }
 
     public Event(String eventName) {
-        this(-1, eventName, new ArrayList<Competition>());
-    }
-
-    public Event(String eventName, Competition... competition) {
-        this(-1, eventName, Arrays.asList(competition));
-    }
-
-    public Event(int id, String eventName, Competition... competition) {
-        this(id, eventName, Arrays.asList(competition));
-    }
-
-    public Event(String eventName, List<Competition> competitions) {
-        this(-1, eventName, competitions);
+        this(-1, eventName);
     }
 
     public String getEventName() {
@@ -43,33 +28,33 @@ public class Event {
         this.eventName = eventName;
     }
 
-    public Competition getCompetition(int index) {
-        return this.competitionList.get(index);
-    }
+//    public Competition getCompetition(long id) {
+//        return null;
+//    }
 
-    public List<Competition> getAllCompetitions() {
-        return this.competitionList;
-    }
+//    public List<Competition> getAllCompetitions() {
+//        return null;
+//    }
 
-    public boolean addCompetition(Competition... competition) {
-        return this.competitionList.addAll(Arrays.asList(competition));
-    }
+//    public boolean addCompetition(Competition... competition) {
+//        return false;
+//    }
 
-    public boolean addCompetitions(List<Competition> competitions) {
-        return this.competitionList.addAll(competitions);
-    }
+//    public boolean addCompetitions(List<Competition> competitions) {
+//        return false;
+//    }
 
-    public boolean removeCompetition(Competition competition) {
-        return this.competitionList.remove(competition);
-    }
+//    public boolean removeCompetition(Competition competition) {
+//        return false;
+//    }
 
-    public Competition removeCompetition(int index) {
-        return this.competitionList.remove(index);
-    }
+//    public Competition removeCompetition(int index) {
+//        return null;
+//    }
 
-    public boolean removeCompetitions(List<Competition> competitions) {
-        return this.competitionList.removeAll(competitions);
-    }
+//    public boolean removeCompetitions(List<Competition> competitions) {
+//        return false;
+//    }
 
     @Override
     public String toString() {

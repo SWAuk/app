@@ -14,6 +14,7 @@
     tools:showIn="@layout/activity_season_list">
 
     <ListView
+        android:tag="@string/season_list_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/seasonsListView"

@@ -1,12 +1,15 @@
-package uk.co.swa.swapp;
+package uk.co.swa.swapp.store;
 
 import java.util.List;
 
 import uk.co.swa.swapp.model.Competition;
 import uk.co.swa.swapp.model.CompetitionType;
 import uk.co.swa.swapp.model.Event;
+import uk.co.swa.swapp.model.IndividualCompetition;
 import uk.co.swa.swapp.model.Member;
 import uk.co.swa.swapp.model.Season;
+import uk.co.swa.swapp.model.Team;
+import uk.co.swa.swapp.model.TeamCompetition;
 import uk.co.swa.swapp.model.University;
 
 public class SQLiteStore implements Store {
@@ -47,6 +50,16 @@ public class SQLiteStore implements Store {
 
     @Override
     public Competition getCompetition(long id) {
+        return null;
+    }
+
+    @Override
+    public List<Member> getIndividualCompetitors(IndividualCompetition competition) {
+        return null;
+    }
+
+    @Override
+    public List<Team> getTeamCompetitors(TeamCompetition competition) {
         return null;
     }
 

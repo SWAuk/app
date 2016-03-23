@@ -16,11 +16,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import uk.co.swa.swapp.GodScrappyDog;
+import uk.co.swa.swapp.God;
 import uk.co.swa.swapp.R;
 import uk.co.swa.swapp.model.Competition;
 import uk.co.swa.swapp.model.Event;
@@ -30,10 +28,8 @@ public class CompetitionListActivity extends AppCompatActivity {
     private static final int AddCompetitionRequestValue = 0;
     private static final int EditCompetitionRequestValue = 1;
 
-    private static ArrayList<List<String>> event_competitions = new ArrayList<List<String>>() {{
-        add(Arrays.asList("Wave"));
-        add(Arrays.asList("Advanced", "Intermediate", "Beginner", "Freestyle", "Team"));
-    }};
+    private God god;
+    private List<Competition> competitionList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,49 +38,29 @@ public class CompetitionListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_competition_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent addCompetitionIntent = new Intent(CompetitionListActivity.this,
-                        CompetitionActivity.class);
-                addCompetitionIntent.putExtra("requestCode", AddCompetitionRequestValue);
-                startActivityForResult(addCompetitionIntent, AddCompetitionRequestValue);
-            }
-        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        this.createFloatingActionButton();
+
+        this.god = God.getInstance();
 
         ListView competitionListView = (ListView) findViewById(R.id.competitionsListView);
 
         // get the eventID passed from the activity calling us
-        int eventID = getIntent().getIntExtra("eventID", -1);
+        long eventID = getIntent().getLongExtra("eventID", -1);
         Log.d(getLocalClassName(), "eventID: " + eventID);
 
-        if (eventID > -1 && eventID < event_competitions.size()) {
-            List<String> competitions = event_competitions.get(eventID);
-            ArrayAdapter<String> competitionsAdapter = new ArrayAdapter<String>(competitionListView.getContext(),
-                    android.R.layout.simple_list_item_1, competitions);
+        Event event = this.god.getStore().getEvent(eventID);
 
-            competitionListView.setAdapter(competitionsAdapter);
-        } else {
-            // TODO: Show empty message
-        }
+        this.competitionList = this.god.getStore().getCompetitions(event);
+        SwaObjectAdapter competitionsAdapter =
+                new SwaObjectAdapter(competitionListView.getContext(),
+                        android.R.layout.simple_list_item_1, this.competitionList);
 
-        competitionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(getLocalClassName(), "Competition ListView Clicked, id: " + id);
+        competitionListView.setAdapter(competitionsAdapter);
 
-                Intent intent = new Intent(CompetitionListActivity.this,
-                        CompetitorListActivity.class);
-                intent.putExtra("competitionID", (int) id);
-                startActivity(intent);
-            }
-        });
-
-        //
-        CompetitionListEditDeleteDialog(this, competitionListView);
+        competitionListView.setOnItemClickListener(this.onCompetitionListViewItemClick());
+        competitionListView.setOnItemLongClickListener(this.onCompetitionListViewItemLongClick());
     }
 
     @Override
@@ -103,41 +79,68 @@ public class CompetitionListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void CompetitionListEditDeleteDialog(final Activity activity,
-                                                 final ListView competitionList){
-
-        competitionList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+    private void createFloatingActionButton() {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, final View view, final int position, long id) {
-                Log.d(getLocalClassName(), String.format("competitionListView long clicked. " +
-                        "position: %d, id: %d", position, id));
-
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
-                dialogBuilder.setTitle((String) competitionList.getItemAtPosition(position));
-                dialogBuilder.setItems(R.array.edit_delete, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Log.d(getLocalClassName(), "EditDeleteDialog clicked: " + which);
-                        switch (which) {
-                            case 0:
-                                Intent editCompetitionIntent = new Intent(activity,
-                                        CompetitionActivity.class);
-
-                                editCompetitionIntent.putExtra("requestCode", 0);
-                                startActivityForResult(editCompetitionIntent, 0);
-                                break;
-                            case 1:
-                                Snackbar.make(view, "Delete not implemented yet...",
-                                        Snackbar.LENGTH_LONG).setAction(null, null).show();
-                                break;
-                        }
-                    }
-                });
-
-                dialogBuilder.create().show();
-
-                return true;
+            public void onClick(View view) {
+                Intent addCompetitionIntent = new Intent(CompetitionListActivity.this,
+                        CompetitionActivity.class);
+                addCompetitionIntent.putExtra("requestCode", AddCompetitionRequestValue);
+                startActivityForResult(addCompetitionIntent, AddCompetitionRequestValue);
             }
         });
     }
+
+    private AdapterView.OnItemClickListener onCompetitionListViewItemClick() {
+
+        return new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long appID) {
+
+                Log.d(getLocalClassName(), "Competition ListView Clicked, appID: " + appID);
+
+                Intent intent = new Intent(CompetitionListActivity.this,
+                        CompetitorListActivity.class);
+
+                intent.putExtra("competitionID", appID);
+                startActivity(intent);
+
+            }
+        };
+
+    }
+
+    private AdapterView.OnItemLongClickListener onCompetitionListViewItemLongClick() {
+        return new EditDeleteDialogOnItemLongClick(this.onEditDeleteDialogClick());
+    }
+
+    private OnEditDeleteDialogClick onEditDeleteDialogClick() {
+
+        return new OnEditDeleteDialogClick() {
+            @Override
+            public void onEditClicked(AdapterView<?> parent, View view,
+                                         int position, long appID) {
+
+                Intent editCompetitionIntent = new Intent(parent.getContext(),
+                        CompetitionActivity.class);
+
+                editCompetitionIntent.putExtra("requestCode", 0);
+                startActivityForResult(editCompetitionIntent, 0);
+
+            }
+
+            @Override
+            public void onDeleteClicked(AdapterView<?> parent, View view,
+                                           int position, long appID) {
+
+                Snackbar.make(view, "Delete not implemented yet...",
+                        Snackbar.LENGTH_LONG).setAction(null, null).show();
+
+            }
+        };
+
+    }
+
 }

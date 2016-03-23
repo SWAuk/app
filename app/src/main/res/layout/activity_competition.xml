@@ -73,6 +73,8 @@
         android:layout_marginEnd="20dp"
         android:entries="@array/competition_heat" />
 
+
+    <!-- TODO: Don't use buttons, use the back arrow and a tick in the ActionBar instead
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,5 +92,5 @@
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/lengthEditText"
         android:layout_marginBottom="76dp" />
-
+        -->
 </RelativeLayout>

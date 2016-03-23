@@ -1,4 +1,4 @@
-package uk.co.swa.swapp;
+package uk.co.swa.swapp.store;
 
 import android.provider.BaseColumns;
 

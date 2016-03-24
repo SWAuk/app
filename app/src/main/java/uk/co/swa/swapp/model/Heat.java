@@ -8,4 +8,5 @@ public class Heat extends SwaObject {
     public Heat(long appID) {
         super(appID);
     }
+
 }

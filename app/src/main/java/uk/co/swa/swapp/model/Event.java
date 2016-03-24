@@ -60,4 +60,5 @@ public class Event extends SwaObject {
     public String toString() {
         return this.eventName;
     }
+
 }

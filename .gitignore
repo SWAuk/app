@@ -8,6 +8,9 @@
 /build
 /captures
 
+.floo
+.flooignore
+
 #built application files
 *.apk
 *.ap_

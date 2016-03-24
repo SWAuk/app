@@ -4,6 +4,7 @@ package uk.co.swa.swapp.model;
  * Created by oliver on 20/03/2016.
  */
 public abstract class SwaObject {
+
     protected long appID;
 
     public SwaObject(long appID) {
@@ -17,4 +18,5 @@ public abstract class SwaObject {
     public void setAppID(long appID) {
         this.appID = appID;
     }
+
 }

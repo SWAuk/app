@@ -68,4 +68,5 @@ public class EditDeleteDialogOnItemLongClick implements AdapterView.OnItemLongCl
             }
         }
     }
+
 }

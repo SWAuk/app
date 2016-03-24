@@ -6,19 +6,19 @@ import java.util.List;
 import java.util.Map;
 
 import uk.co.swa.swapp.model.Competition;
+import uk.co.swa.swapp.model.CompetitionEntrant;
 import uk.co.swa.swapp.model.CompetitionType;
 import uk.co.swa.swapp.model.Event;
-import uk.co.swa.swapp.model.IndividualCompetition;
+import uk.co.swa.swapp.model.Heat;
 import uk.co.swa.swapp.model.Member;
 import uk.co.swa.swapp.model.Season;
-import uk.co.swa.swapp.model.Team;
-import uk.co.swa.swapp.model.TeamCompetition;
 import uk.co.swa.swapp.model.University;
 
 /**
  * Created by oliver on 20/03/2016.
  */
-public class MockDataStore implements Store {
+public class MockAppStore implements AppStore {
+
     List<CompetitionType> competitionTypeList;
     List<University> universityList;
     List<Member> memberList;
@@ -28,7 +28,7 @@ public class MockDataStore implements Store {
     Map<Event, List<Competition>> competitionMap;
     Map<Competition, List<Member>> individualCompetitorMap;
 
-    public MockDataStore() {
+    public MockAppStore() {
         this.competitionTypeList = new ArrayList<>();
         this.universityList = new ArrayList<>();
         this.memberList = new ArrayList<>();
@@ -110,12 +110,12 @@ public class MockDataStore implements Store {
     }
 
     @Override
-    public List<Member> getIndividualCompetitors(IndividualCompetition competition) {
+    public List<CompetitionEntrant> getCompetitionEntrants(Competition competition) {
         return null;
     }
 
     @Override
-    public List<Team> getTeamCompetitors(TeamCompetition competition) {
+    public List<Heat> getCompetitionHeats(Competition competition) {
         return null;
     }
 
@@ -145,18 +145,12 @@ public class MockDataStore implements Store {
     }
 
     private void populateCompetitionTypeList() {
-
-        List<CompetitionType> competitionTypes = new ArrayList<>();
-
-        competitionTypes.add(new CompetitionType(1, "Beginner", IndividualCompetition.class));
-        competitionTypes.add(new CompetitionType(2, "Intermediate", IndividualCompetition.class));
-        competitionTypes.add(new CompetitionType(3, "Advanced", IndividualCompetition.class));
-        competitionTypes.add(new CompetitionType(4, "Freestyle", IndividualCompetition.class));
-        competitionTypes.add(new CompetitionType(5, "Team", TeamCompetition.class));
-        competitionTypes.add(new CompetitionType(6, "Wave", IndividualCompetition.class));
-
-        this.competitionTypeList.addAll(competitionTypes);
-
+        this.competitionTypeList.add(new CompetitionType(1, "Beginner"));
+        this.competitionTypeList.add(new CompetitionType(2, "Intermediate"));
+        this.competitionTypeList.add(new CompetitionType(3, "Advanced"));
+        this.competitionTypeList.add(new CompetitionType(4, "Freestyle"));
+        this.competitionTypeList.add(new CompetitionType(5, "Team"));
+        this.competitionTypeList.add(new CompetitionType(6, "Wave"));
     }
 
     private void populateUniversityList() {
@@ -233,7 +227,7 @@ public class MockDataStore implements Store {
     private void populateCompetitionMap() {
         // create a list of competitions
         ArrayList<Competition> competitions = new ArrayList<>();
-        competitions.add(new IndividualCompetition(1, this.competitionTypeList.get(1)));
+        competitions.add(new Competition(1, this.competitionTypeList.get(1)));
 
         // add the competitions to Season 15/16 - Event "Disney Presents Cardiff Wave"
         this.competitionMap.get(this.eventMap.get(this.seasonList.get(0)).get(0)).addAll(competitions);
@@ -247,4 +241,5 @@ public class MockDataStore implements Store {
         }
 
     }
+
 }

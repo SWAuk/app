@@ -3,7 +3,7 @@ package uk.co.swa.swapp.model;
 /**
  * Created by oliver on 12/03/2016.
  */
-public class Member extends SwaObject {
+public class Member extends SwaObject implements CompetitionEntrant {
 
     private String memberName;
     private University memberUniversity;
@@ -18,8 +18,9 @@ public class Member extends SwaObject {
         this(-1, memberName, university);
     }
 
-    public String getMemberName() {
-        return memberName;
+    @Override
+    public String getName() {
+        return this.memberName;
     }
 
     public void setMemberName(String memberName) {

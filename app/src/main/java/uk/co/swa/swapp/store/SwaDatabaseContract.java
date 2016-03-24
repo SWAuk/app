@@ -65,4 +65,5 @@ public final class SwaDatabaseContract {
         public static final String COLUMN_NAME_SEASON_ID = "season_id";
         public static final String COLUMN_NAME_SEASON_NAME = "season_name";
     }
+
 }

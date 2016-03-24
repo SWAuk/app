@@ -1,19 +1,15 @@
 package uk.co.swa.swapp.controller;
 
-import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.List;
@@ -50,9 +46,9 @@ public class CompetitionListActivity extends AppCompatActivity {
         long eventID = getIntent().getLongExtra("eventID", -1);
         Log.d(getLocalClassName(), "eventID: " + eventID);
 
-        Event event = this.god.getStore().getEvent(eventID);
+        Event event = this.god.getAppStore().getEvent(eventID);
 
-        this.competitionList = this.god.getStore().getCompetitions(event);
+        this.competitionList = this.god.getAppStore().getCompetitions(event);
         SwaObjectAdapter competitionsAdapter =
                 new SwaObjectAdapter(competitionListView.getContext(),
                         android.R.layout.simple_list_item_1, this.competitionList);

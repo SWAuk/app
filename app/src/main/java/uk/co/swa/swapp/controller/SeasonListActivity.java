@@ -32,7 +32,7 @@ public class SeasonListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         this.god = God.getInstance();
-        this.seasonList = this.god.getStore().getSeasons();
+        this.seasonList = this.god.getAppStore().getSeasons();
 
         setContentView(R.layout.activity_season_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -132,4 +132,5 @@ public class SeasonListActivity extends AppCompatActivity {
         };
 
     }
+
 }

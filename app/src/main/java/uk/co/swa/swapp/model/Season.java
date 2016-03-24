@@ -36,7 +36,7 @@ public class Season extends SwaObject {
 //    }
 
     public List<Event> getAllEvents() {
-        return this.god.getStore().getEvents(this);
+        return this.god.getAppStore().getEvents(this);
     }
 
 //    public boolean addEvent(Event... event) {

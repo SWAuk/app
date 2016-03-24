@@ -28,4 +28,5 @@ public class University extends SwaObject {
     public String toString() {
         return this.universityName;
     }
+
 }

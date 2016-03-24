@@ -14,6 +14,7 @@ import android.widget.ListView;
 import uk.co.swa.swapp.R;
 
 public class CompetitorListActivity extends AppCompatActivity {
+
     String[][] event_competitors = {
             {}, {}
     };
@@ -61,4 +62,5 @@ public class CompetitorListActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

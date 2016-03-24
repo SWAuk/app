@@ -3,7 +3,7 @@ package uk.co.swa.swapp.model;
 /**
  * Created by oliver on 14/03/2016.
  */
-public class Team extends SwaObject{
+public class Team extends SwaObject implements CompetitionEntrant {
 
     private University university;
     private int teamNumber;
@@ -16,6 +16,11 @@ public class Team extends SwaObject{
 
     public Team(University university, int teamNumber) {
         this(-1, university, teamNumber);
+    }
+
+    @Override
+    public String getName() {
+        return this.university + " " + this.teamNumber;
     }
 
     public University getUniversity() {
@@ -36,6 +41,7 @@ public class Team extends SwaObject{
 
     @Override
     public String toString() {
-        return this.university.toString() + " " + this.teamNumber;
+        return this.getName();
     }
+
 }

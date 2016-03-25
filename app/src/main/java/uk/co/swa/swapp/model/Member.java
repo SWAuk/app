@@ -34,4 +34,9 @@ public class Member extends SwaObject implements CompetitionEntrant {
     public void setMemberUniversity(University memberUniversity) {
         this.memberUniversity = memberUniversity;
     }
+
+    @Override
+    public String toString() {
+        return this.memberName;
+    }
 }

@@ -1,9 +1,11 @@
 package uk.co.swa.swapp.store;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import uk.co.swa.swapp.model.Competition;
 import uk.co.swa.swapp.model.CompetitionEntrant;
@@ -110,8 +112,9 @@ public class MockAppStore implements AppStore {
     }
 
     @Override
-    public List<CompetitionEntrant> getCompetitionEntrants(Competition competition) {
-        return null;
+    public List<? extends CompetitionEntrant> getCompetitionEntrants(Competition competition) {
+        Random rand = new Random();
+        return this.getMembers().subList(rand.nextInt(5), rand.nextInt(12) + 6);
     }
 
     @Override

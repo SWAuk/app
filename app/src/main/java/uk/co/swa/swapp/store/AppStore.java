@@ -19,7 +19,7 @@ public interface AppStore {
     List<Competition> getCompetitions( Event event );
     Competition getCompetition( long id );
 
-    List<CompetitionEntrant> getCompetitionEntrants(Competition competition );
+    List<? extends CompetitionEntrant> getCompetitionEntrants(Competition competition );
     List<Heat> getCompetitionHeats(Competition competition);
 
     List<Member> getMembers();

@@ -1,12 +1,18 @@
 package uk.co.swa.swapp.model;
 
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import uk.co.swa.swapp.God;
 
 /**
  * Created by oliver on 14/03/2016.
  */
 public class Competition extends SwaObject {
-    protected static God god;
+    protected God god;
 
     protected CompetitionType competitionType;
 
@@ -14,7 +20,7 @@ public class Competition extends SwaObject {
         super(appID);
         this.competitionType = competitionType;
 
-        god = God.getInstance();
+        this.god = God.getInstance();
     }
 
     public Competition(CompetitionType competitionType) {
@@ -30,12 +36,65 @@ public class Competition extends SwaObject {
     }
 
     public void createCompetitionHeats(int maxEntrants) {
+        Log.d("swapp.model.Competition",
+                "createCompetitionHeats(maxEntrants = " + maxEntrants + ").");
+
         if (maxEntrants < 1) {
             throw new IllegalArgumentException("There has to be more than 1 entrant in a heat.");
         }
 
-//        god.getAppStore()
+        List<? extends CompetitionEntrant> entrants = this.god.getAppStore().getCompetitionEntrants(Competition.this);
+        Log.d("swapp.model.Competition", "Size entrants: " + entrants.size());
 
+        final int numberOfHeats = (int) Math.ceil((double) entrants.size() / maxEntrants);
+        int avgEntrantsPerHeat = entrants.size() / numberOfHeats;
+
+        /*Collections.sort(entrants, new Comparator<CompetitionEntrant>() {
+            @Override
+            public int compare(CompetitionEntrant lhs, CompetitionEntrant rhs) {
+                // TODO: implement comparison, first by points, then by university.
+                int pointDifference = lhs.getPoints() - rhs.getPoints;
+                if (pointDifference != 0) {
+                    return pointDifference;
+                }
+
+                return  lhs.getUniversity().compareTo(rhs.getUniversity());
+            }
+        });*/
+
+        List<List<CompetitionEntrant>> heatEntrants = new ArrayList() {{
+            for (int i = 0; i < numberOfHeats; i++) {
+                add(new ArrayList<CompetitionEntrant>());
+            }
+        }};
+
+        Iterator<? extends CompetitionEntrant> entrantsIterator = entrants.iterator();
+
+        for (int i = 0; i <= avgEntrantsPerHeat; i++) {
+            if (i % 2 == 0) {
+                for (int j = 0; j < numberOfHeats; j++) {
+                    if (entrantsIterator.hasNext()) {
+                        heatEntrants.get(j).add(entrantsIterator.next());
+                    } else {
+                        break;
+                    }
+                }
+            } else {
+                for (int j = numberOfHeats - 1; j >= 0; j--) {
+                    if (entrantsIterator.hasNext()) {
+                        heatEntrants.get(j).add(entrantsIterator.next());
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+
+        int i = 0;
+        for (List<CompetitionEntrant> heats : heatEntrants) {
+            System.out.println("===== Heat " + ++i + " =====");
+            System.out.println(heats);
+        }
     }
 
 //    public Heat getHeat(int index) {

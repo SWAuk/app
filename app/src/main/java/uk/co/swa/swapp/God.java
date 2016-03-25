@@ -20,6 +20,10 @@ public class God {
     }
 
     private God() {
+        // TODO: Talk to Adam about needing this when using the MockAppStore.
+        if (ourInstance == null) {
+            ourInstance = this;
+        }
         this.appStore = new MockAppStore();
         this.mainStore = new MockMainStore();
     }

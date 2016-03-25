@@ -114,7 +114,7 @@ public class MockAppStore implements AppStore {
     @Override
     public List<? extends CompetitionEntrant> getCompetitionEntrants(Competition competition) {
         Random rand = new Random();
-        return this.getMembers().subList(rand.nextInt(5), rand.nextInt(12) + 6);
+        return this.getMembers().subList(rand.nextInt(5), rand.nextInt(9) + 6);
     }
 
     @Override
@@ -124,7 +124,7 @@ public class MockAppStore implements AppStore {
 
     @Override
     public List<Member> getMembers() {
-        return null;
+        return this.memberList;
     }
 
     @Override
@@ -134,7 +134,7 @@ public class MockAppStore implements AppStore {
 
     @Override
     public List<University> getUniversities() {
-        return null;
+        return this.universityList;
     }
 
     @Override
@@ -180,15 +180,17 @@ public class MockAppStore implements AppStore {
         this.memberList.add(new Member(1, "Roisin Irish", this.getUniversity(15)));
         this.memberList.add(new Member(1, "Kate Simpson", this.getUniversity(15)));
         this.memberList.add(new Member(1, "Ben Jones", this.getUniversity(15)));
-        this.memberList.add(new Member(1, "Jaayme", this.getUniversity(15)));
+        this.memberList.add(new Member(1, "Jane Janerson", this.getUniversity(15)));
         this.memberList.add(new Member(1, "Olives Are-Cool", this.getUniversity(8)));
-        this.memberList.add(new Member(1, "Jane Jenny Janson", this.getUniversity(8)));
+        this.memberList.add(new Member(1, "Jenny Bradford", this.getUniversity(8)));
         this.memberList.add(new Member(1, "Larry Page", this.getUniversity(3)));
         this.memberList.add(new Member(1, "Louis LaLa", this.getUniversity(3)));
         this.memberList.add(new Member(1, "Ben Smith", this.getUniversity(12)));
-        this.memberList.add(new Member(1, "Jack DooDar", this.getUniversity(5)));
+        this.memberList.add(new Member(1, "Jack Jackson", this.getUniversity(5)));
+        this.memberList.add(new Member(1, "Sam Sampson", this.getUniversity(12)));
         this.memberList.add(new Member(1, "Adam Small", this.getUniversity(5)));
-        this.memberList.add(new Member(1, "Ann Bar", this.getUniversity(5)));
+        this.memberList.add(new Member(1, "Ann Anderson", this.getUniversity(5)));
+        this.memberList.add(new Member(1, "Anthony Ant", this.getUniversity(8)));
     }
 
     private void populateSeasonList() {

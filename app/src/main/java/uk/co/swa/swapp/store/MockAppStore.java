@@ -85,7 +85,7 @@ public class MockAppStore implements AppStore {
 
     @Override
     public List<CompetitionType> getCompetitionTypes() {
-        return null;
+        return this.competitionTypeList;
     }
 
     @Override

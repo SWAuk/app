@@ -1,7 +1,7 @@
 package uk.co.swa.swapp.store;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +26,7 @@ public class MockAppStore implements AppStore {
 
     List<Event> eventList;
     Map<Event, List<Competition>> competitionMap;
-    Map<Competition, List<Member>> individualCompetitorMap;
+    Map<Competition, List<CompetitionEntrant>> competitorMap;
 
     public MockAppStore() {
         this.competitionTypeList = new ArrayList<>();
@@ -39,7 +39,7 @@ public class MockAppStore implements AppStore {
 
         this.eventList = new ArrayList<>();
         this.competitionMap = new HashMap<>();
-        individualCompetitorMap = new HashMap<>();
+        this.competitorMap = new HashMap<>();
 
         this.populateEventList();
         this.populateCompetitionMap();
@@ -111,6 +111,18 @@ public class MockAppStore implements AppStore {
     public List<? extends CompetitionEntrant> getCompetitionEntrants(Competition competition) {
         Random rand = new Random();
         return this.getMembers().subList(rand.nextInt(5), rand.nextInt(9) + 6);
+    }
+
+    @Override
+    public boolean storeCompetitionEntrant(Competition competition,
+                                           CompetitionEntrant competitionEntrant) {
+        return this.competitorMap.get(competition).add(competitionEntrant);
+    }
+
+    @Override
+    public boolean storeCompetitionEntrants(Competition competition,
+                                            List<CompetitionEntrant> competitionEntrants) {
+        return this.competitorMap.get(competition).addAll(competitionEntrants);
     }
 
     @Override
@@ -191,7 +203,7 @@ public class MockAppStore implements AppStore {
 
     private void populateEventList() {
 
-        // Season 2 - 2014/15
+        // 2014/15
         this.eventList.add(new Event(6, "BUCS Nationals"));
         this.eventList.add(new Event(5, "Nottingham"));
         this.eventList.add(new Event(4, "Cardiff"));
@@ -199,7 +211,7 @@ public class MockAppStore implements AppStore {
         this.eventList.add(new Event(2, "PlymEx"));
         this.eventList.add(new Event(1, "BrUWE"));
 
-        // Season 1 - 2015/16
+        // 2015/16
         this.eventList.add(new Event(11, "Disney Presents Cardiff Wave"));
         this.eventList.add(new Event(10, "Nottingham Pondlife"));
         this.eventList.add(new Event(9, "BrUWE Wet Dreams"));
@@ -217,14 +229,14 @@ public class MockAppStore implements AppStore {
         ArrayList<Competition> competitions = new ArrayList<>();
         competitions.add(new Competition(1, this.getCompetitionType(6)));
 
-        // add the competitions to Season 15/16 - Event "Disney Presents Cardiff Wave"
+        // add the competitions to Event "Disney Presents Cardiff Wave"
         this.competitionMap.get(this.getEvent(11)).addAll(competitions);
 
         // foreach of the competitions add an empty ArrayList to the ???Map
         for (List<Competition> competitionList : this.competitionMap.values()) {
             for (Competition competition : competitionList) {
                 // TODO: How to differentiate between individuals and teams?
-                this.individualCompetitorMap.put(competition, new ArrayList<Member>());
+                this.competitorMap.put(competition, new ArrayList<CompetitionEntrant>());
             }
         }
 

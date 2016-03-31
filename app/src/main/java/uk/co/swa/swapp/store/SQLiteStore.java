@@ -54,6 +54,16 @@ public class SQLiteStore implements AppStore {
     }
 
     @Override
+    public boolean storeCompetitionEntrant(Competition competition, CompetitionEntrant competitionEntrant) {
+        return false;
+    }
+
+    @Override
+    public boolean storeCompetitionEntrants(Competition competition, List<CompetitionEntrant> competitionEntrants) {
+        return false;
+    }
+
+    @Override
     public List<Heat> getCompetitionHeats(Competition competition) {
         return null;
     }

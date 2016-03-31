@@ -19,6 +19,10 @@ public interface AppStore {
     Competition getCompetition( long id );
 
     List<? extends CompetitionEntrant> getCompetitionEntrants(Competition competition );
+    boolean storeCompetitionEntrant(Competition competition,
+                                    CompetitionEntrant competitionEntrant);
+    boolean storeCompetitionEntrants(Competition competition,
+                                     List<CompetitionEntrant> competitionEntrants);
     List<Heat> getCompetitionHeats(Competition competition);
 
     List<Member> getMembers();

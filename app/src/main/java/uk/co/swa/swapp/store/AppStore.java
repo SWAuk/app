@@ -10,9 +10,8 @@ import uk.co.swa.swapp.model.*;
  */
 public interface AppStore {
 
-    List<Season> getSeasons();
-    Season getSeason( long id );
-    List<Event> getEvents( Season season );
+    List<Event> getEvents();
+    List<Event> getEvents(int limit);
     Event getEvent( long id );
     List<CompetitionType> getCompetitionTypes();
     CompetitionType getCompetitionType( long id );

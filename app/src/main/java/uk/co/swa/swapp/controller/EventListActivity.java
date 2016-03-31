@@ -39,13 +39,7 @@ public class EventListActivity extends AppCompatActivity {
 
         ListView eventListView = (ListView) findViewById(R.id.eventsListView);
 
-        long seasonID = getIntent().getLongExtra("seasonID", -1);
-        Log.d(getLocalClassName(), "seasonID: " + seasonID);
-
-        Season season = this.god.getAppStore().getSeason(seasonID);
-        Log.d(getLocalClassName(), "Season: " + season);
-
-        this.eventList = this.god.getAppStore().getEvents(season);
+        this.eventList = this.god.getAppStore().getEvents(5);
 
         SwaObjectAdapter eventListAdapter = new SwaObjectAdapter(eventListView.getContext(),
                 android.R.layout.simple_list_item_1, this.eventList);

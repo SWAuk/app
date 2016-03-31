@@ -14,17 +14,12 @@ import uk.co.swa.swapp.model.University;
 public class SQLiteStore implements AppStore {
 
     @Override
-    public List<Season> getSeasons() {
+    public List<Event> getEvents() {
         return null;
     }
 
     @Override
-    public Season getSeason(long id) {
-        return null;
-    }
-
-    @Override
-    public List<Event> getEvents(Season season) {
+    public List<Event> getEvents(int limit) {
         return null;
     }
 

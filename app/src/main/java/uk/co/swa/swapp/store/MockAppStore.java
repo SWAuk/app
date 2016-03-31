@@ -225,17 +225,17 @@ public class MockAppStore implements AppStore {
     }
 
     private void populateCompetitionMap() {
-        // create a list of competitions
-        ArrayList<Competition> competitions = new ArrayList<>();
-        competitions.add(new Competition(1, this.getCompetitionType(6)));
 
-        // add the competitions to Event "Disney Presents Cardiff Wave"
-        this.competitionMap.get(this.getEvent(11)).addAll(competitions);
+        // add competitions to "Disney Presents Cardiff Wave"
+        this.competitionMap.get(getEvent(11)).add(new Competition(1, getCompetitionType(6)));
 
-        // foreach of the competitions add an empty ArrayList to the ???Map
+        // add competitions to "Nottingham Pondlife"
+        this.competitionMap.get(getEvent(10)).add(new Competition(2, getCompetitionType(5)));
+
+
+        // foreach of the competitions add an empty ArrayList to the competitorMap
         for (List<Competition> competitionList : this.competitionMap.values()) {
             for (Competition competition : competitionList) {
-                // TODO: How to differentiate between individuals and teams?
                 this.competitorMap.put(competition, new ArrayList<CompetitionEntrant>());
             }
         }

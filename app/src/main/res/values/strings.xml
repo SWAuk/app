@@ -11,4 +11,5 @@
     <string name="event_list_view">Event ListView</string>
     <string name="competition_list_view">Competition ListView</string>
     <string name="competitor_list_view">Competitor ListView</string>
+    <string name="label_type">Type</string>
 </resources>

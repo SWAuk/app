@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Type"
+        android:text="@string/type_label"
         android:id="@+id/typeTextView"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
@@ -28,50 +28,7 @@
         android:layout_alignBaseline="@+id/typeTextView"
         android:layout_alignBottom="@+id/typeTextView"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="20dp"
-        android:entries="@array/competition_type" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Length (min)"
-        android:id="@+id/lengthTextView"
-        android:layout_below="@+id/typeTextView"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="45dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/lengthEditText"
-        android:layout_alignBottom="@+id/lengthTextView"
-        android:layout_alignEnd="@+id/typeSpinner"
-        android:layout_alignStart="@+id/typeSpinner" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Heat"
-        android:id="@+id/heatTextView"
-        android:layout_below="@+id/lengthTextView"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="45dp" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/heatSpinner"
-        android:spinnerMode="dropdown"
-        android:layout_alignBaseline="@+id/heatTextView"
-        android:layout_alignBottom="@+id/heatTextView"
-        android:layout_alignTop="@+id/heatTextView"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="20dp"
-        android:entries="@array/competition_heat" />
+        android:layout_marginEnd="20dp" />
 
 
     <!-- TODO: Don't use buttons, use the back arrow and a tick in the ActionBar instead

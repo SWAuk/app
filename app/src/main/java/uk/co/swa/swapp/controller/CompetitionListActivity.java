@@ -125,7 +125,8 @@ public class CompetitionListActivity extends AppCompatActivity {
                 Intent editCompetitionIntent = new Intent(parent.getContext(),
                         CompetitionActivity.class);
 
-                editCompetitionIntent.putExtra("requestCode", 0);
+                editCompetitionIntent.putExtra("competitionID",
+                        competitionList.get(position).getAppID());
                 startActivityForResult(editCompetitionIntent, 0);
 
             }

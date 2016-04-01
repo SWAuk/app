@@ -16,7 +16,7 @@
         android:tag="@string/competitor_list_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/competitorsListView"
+        android:id="@+id/competitorListView"
         android:layout_centerVertical="false"
         android:layout_centerHorizontal="true" />
 

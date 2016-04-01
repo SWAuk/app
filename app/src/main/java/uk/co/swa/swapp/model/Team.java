@@ -3,13 +3,13 @@ package uk.co.swa.swapp.model;
 /**
  * Created by oliver on 14/03/2016.
  */
-public class Team extends SwaObject implements CompetitionEntrant {
+public class Team implements CompetitionEntrant {
 
     private University university;
     private int teamNumber;
 
     public Team(long appID, University university, int teamNumber) {
-        super(appID);
+        // super(appID);
         this.university = university;
         this.teamNumber = teamNumber;
     }
@@ -21,6 +21,16 @@ public class Team extends SwaObject implements CompetitionEntrant {
     @Override
     public String getName() {
         return this.university + " " + this.teamNumber;
+    }
+
+    @Override
+    public long getAppID() {
+        return 0;
+    }
+
+    @Override
+    public void setAppID(long appID) {
+
     }
 
     public University getUniversity() {

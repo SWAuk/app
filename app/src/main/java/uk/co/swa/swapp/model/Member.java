@@ -3,13 +3,14 @@ package uk.co.swa.swapp.model;
 /**
  * Created by oliver on 12/03/2016.
  */
-public class Member extends SwaObject implements CompetitionEntrant {
+public class Member implements CompetitionEntrant{
 
+    private long appID;
     private String memberName;
     private University memberUniversity;
 
     public Member(long appID, String memberName, University memberUniversity) {
-        super(appID);
+        this.appID = appID;
         this.memberName = memberName;
         this.memberUniversity = memberUniversity;
     }
@@ -23,15 +24,25 @@ public class Member extends SwaObject implements CompetitionEntrant {
         return this.memberName;
     }
 
-    public void setMemberName(String memberName) {
+    public void setName(String memberName) {
         this.memberName = memberName;
     }
 
-    public University getMemberUniversity() {
+    @Override
+    public long getAppID() {
+        return this.appID;
+    }
+
+    @Override
+    public void setAppID(long appID) {
+        this.appID = appID;
+    }
+
+    public University getUniversity() {
         return memberUniversity;
     }
 
-    public void setMemberUniversity(University memberUniversity) {
+    public void setUniversity(University memberUniversity) {
         this.memberUniversity = memberUniversity;
     }
 
@@ -39,4 +50,5 @@ public class Member extends SwaObject implements CompetitionEntrant {
     public String toString() {
         return this.memberName;
     }
+
 }

@@ -1,7 +1,6 @@
 package uk.co.swa.swapp.store;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,7 +109,11 @@ public class MockAppStore implements AppStore {
     @Override
     public List<? extends CompetitionEntrant> getCompetitionEntrants(Competition competition) {
         Random rand = new Random();
-        return this.getMembers().subList(rand.nextInt(5), rand.nextInt(9) + 6);
+        if (competition.getCompetitionType().toString().contains("Team")) {
+            return this.competitorMap.get(competition);
+        } else {
+            return this.getMembers().subList(rand.nextInt(5), rand.nextInt(9) + 6);
+        }
     }
 
     @Override

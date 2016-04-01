@@ -8,7 +8,6 @@ import uk.co.swa.swapp.model.CompetitionType;
 import uk.co.swa.swapp.model.Event;
 import uk.co.swa.swapp.model.Heat;
 import uk.co.swa.swapp.model.Member;
-import uk.co.swa.swapp.model.Season;
 import uk.co.swa.swapp.model.University;
 
 public class SQLiteStore implements AppStore {
@@ -49,7 +48,7 @@ public class SQLiteStore implements AppStore {
     }
 
     @Override
-    public List<CompetitionEntrant> getCompetitionEntrants(Competition competition) {
+    public List<? extends CompetitionEntrant> getCompetitionEntrants(Competition competition) {
         return null;
     }
 

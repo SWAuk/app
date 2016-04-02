@@ -1,12 +1,20 @@
 package uk.co.swa.swapp.model;
 
-/**
- * Created by oliver on 14/03/2016.
- */
-public class Heat extends SwaObject {
+public class Heat implements SwaObject {
+
+    long appID;
 
     public Heat(long appID) {
-        super(appID);
+        this.appID = appID;
     }
 
+    @Override
+    public long getAppID() {
+        return this.appID;
+    }
+
+    @Override
+    public void setAppID(long appID) {
+        this.appID = appID;
+    }
 }

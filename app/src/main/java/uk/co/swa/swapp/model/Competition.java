@@ -8,16 +8,14 @@ import java.util.List;
 
 import uk.co.swa.swapp.God;
 
-/**
- * Created by oliver on 14/03/2016.
- */
-public class Competition extends SwaObject {
-    protected God god;
+public class Competition implements SwaObject {
 
-    protected CompetitionType competitionType;
+    private God god;
+    private long appID;
+    private CompetitionType competitionType;
 
     public Competition(long appID, CompetitionType competitionType) {
-        super(appID);
+        this.appID = appID;
         this.competitionType = competitionType;
 
         this.god = God.getInstance();
@@ -25,6 +23,16 @@ public class Competition extends SwaObject {
 
     public Competition(CompetitionType competitionType) {
         this(-1, competitionType);
+    }
+
+    @Override
+    public long getAppID() {
+        return this.appID;
+    }
+
+    @Override
+    public void setAppID(long appID) {
+        this.appID = appID;
     }
 
     public CompetitionType getCompetitionType() {
@@ -35,6 +43,7 @@ public class Competition extends SwaObject {
         this.competitionType = competitionType;
     }
 
+    // TODO: This doesn't belong here
     public void createCompetitionHeats(int maxEntrants) {
         Log.d("swapp.model.Competition",
                 "createCompetitionHeats(maxEntrants = " + maxEntrants + ").");
@@ -62,7 +71,7 @@ public class Competition extends SwaObject {
             }
         });*/
 
-        List<List<CompetitionEntrant>> heatEntrants = new ArrayList() {{
+        List<List<CompetitionEntrant>> heatEntrants = new ArrayList<List<CompetitionEntrant>>() {{
             for (int i = 0; i < numberOfHeats; i++) {
                 add(new ArrayList<CompetitionEntrant>());
             }

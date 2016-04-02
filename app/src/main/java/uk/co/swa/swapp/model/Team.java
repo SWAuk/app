@@ -1,15 +1,13 @@
 package uk.co.swa.swapp.model;
 
-/**
- * Created by oliver on 14/03/2016.
- */
 public class Team implements CompetitionEntrant {
 
+    private long appID;
     private University university;
     private int teamNumber;
 
     public Team(long appID, University university, int teamNumber) {
-        // super(appID);
+        this.appID = appID;
         this.university = university;
         this.teamNumber = teamNumber;
     }
@@ -25,18 +23,20 @@ public class Team implements CompetitionEntrant {
 
     @Override
     public long getAppID() {
-        return 0;
+        return this.appID;
     }
 
     @Override
     public void setAppID(long appID) {
-
+        this.appID = appID;
     }
 
+    @Override
     public University getUniversity() {
         return university;
     }
 
+    @Override
     public void setUniversity(University university) {
         this.university = university;
     }

@@ -1,23 +1,27 @@
 package uk.co.swa.swapp.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+public class Event implements SwaObject {
 
-/**
- * Created by oliver on 12/03/2016.
- */
-public class Event extends SwaObject {
-
+    private long appID;
     private String eventName;
 
     public Event(long appID, String eventName) {
-        super(appID);
+        this.appID = appID;
         this.eventName = eventName;
     }
 
     public Event(String eventName) {
         this(-1, eventName);
+    }
+
+    @Override
+    public long getAppID() {
+        return this.appID;
+    }
+
+    @Override
+    public void setAppID(long appID) {
+        this.appID = appID;
     }
 
     public String getEventName() {

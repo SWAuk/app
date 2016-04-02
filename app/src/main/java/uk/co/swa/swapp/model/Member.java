@@ -1,8 +1,5 @@
 package uk.co.swa.swapp.model;
 
-/**
- * Created by oliver on 12/03/2016.
- */
 public class Member implements CompetitionEntrant{
 
     private long appID;
@@ -38,10 +35,12 @@ public class Member implements CompetitionEntrant{
         this.appID = appID;
     }
 
+    @Override
     public University getUniversity() {
         return memberUniversity;
     }
 
+    @Override
     public void setUniversity(University memberUniversity) {
         this.memberUniversity = memberUniversity;
     }

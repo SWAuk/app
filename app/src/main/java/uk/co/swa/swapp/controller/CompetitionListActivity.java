@@ -97,9 +97,6 @@ public class CompetitionListActivity extends AppCompatActivity {
 
                 Log.d(getLocalClassName(), "Competition ListView Clicked, appID: " + appID);
 
-                Competition competition = god.getAppStore().getCompetition(appID);
-                competition.createCompetitionHeats(5);
-
                 Intent intent = new Intent(CompetitionListActivity.this,
                         CompetitorListActivity.class);
 

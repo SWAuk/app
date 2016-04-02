@@ -18,13 +18,12 @@ import java.util.List;
 
 import uk.co.swa.swapp.God;
 import uk.co.swa.swapp.R;
-import uk.co.swa.swapp.model.Season;
 
 public class SeasonListActivity extends AppCompatActivity {
 
     private God god;
-    private List<Season> seasonList;
-    private ArrayAdapter<Season> seasonsAdapter;
+    // private List<Season> seasonList;
+    // private ArrayAdapter<Season> seasonsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +41,10 @@ public class SeasonListActivity extends AppCompatActivity {
 
         ListView seasonListView = (ListView) findViewById(R.id.seasonsListView);
 
-        this.seasonsAdapter = new SwaObjectAdapter(seasonListView.getContext(),
-                android.R.layout.simple_list_item_1, this.seasonList);
+        //this.seasonsAdapter = new SwaObjectAdapter(seasonListView.getContext(),
+        //        android.R.layout.simple_list_item_1, this.seasonList);
 
-        seasonListView.setAdapter(this.seasonsAdapter);
+        // seasonListView.setAdapter(this.seasonsAdapter);
 
         seasonListView.setOnItemClickListener(this.onSeasonListViewItemClick());
         seasonListView.setOnItemLongClickListener(this.onSeasonListViewItemLongClick());
@@ -117,17 +116,17 @@ public class SeasonListActivity extends AppCompatActivity {
             public void onDeleteClicked(AdapterView<?> parent, View view,
                                            int position, long appID) {
 
-                Season season = seasonList.get(position);
-                boolean success = seasonList.remove(season);
+                // Season season = seasonList.get(position);
+                // boolean success = seasonList.remove(season);
 
-                if (success) {
-                    seasonsAdapter.notifyDataSetChanged();
-                    Snackbar.make(view, season + " removed.",
-                            Snackbar.LENGTH_LONG).setAction(null, null).show();
-                } else {
-                    Snackbar.make(view, "Unable to remove " + season + ".",
-                            Snackbar.LENGTH_LONG).setAction(null, null).show();
-                }
+                // if (success) {
+                //    seasonsAdapter.notifyDataSetChanged();
+                //    Snackbar.make(view, season + " removed.",
+                //            Snackbar.LENGTH_LONG).setAction(null, null).show();
+                // } else {
+                //    Snackbar.make(view, "Unable to remove " + season + ".",
+                //            Snackbar.LENGTH_LONG).setAction(null, null).show();
+                // }
             }
         };
 

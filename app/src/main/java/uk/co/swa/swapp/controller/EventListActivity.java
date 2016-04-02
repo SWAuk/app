@@ -17,7 +17,6 @@ import java.util.List;
 import uk.co.swa.swapp.God;
 import uk.co.swa.swapp.R;
 import uk.co.swa.swapp.model.Event;
-import uk.co.swa.swapp.model.Season;
 
 public class EventListActivity extends AppCompatActivity {
 
@@ -36,10 +35,9 @@ public class EventListActivity extends AppCompatActivity {
         this.createFloatingActionButton();
 
         this.god = God.getInstance();
+        this.eventList = this.god.getAppStore().getEvents(5);
 
         ListView eventListView = (ListView) findViewById(R.id.eventsListView);
-
-        this.eventList = this.god.getAppStore().getEvents(5);
 
         SwaObjectAdapter eventListAdapter = new SwaObjectAdapter(eventListView.getContext(),
                 android.R.layout.simple_list_item_1, this.eventList);

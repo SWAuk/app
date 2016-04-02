@@ -10,25 +10,32 @@ import uk.co.swa.swapp.model.*;
  */
 public interface AppStore {
 
+    Event getEvent( long id );
     List<Event> getEvents();
     List<Event> getEvents(int limit);
-    Event getEvent( long id );
+
     List<CompetitionType> getCompetitionTypes();
     CompetitionType getCompetitionType( long id );
-    List<Competition> getCompetitions( Event event );
-    Competition getCompetition( long id );
 
+    Competition getCompetition( long id );
+    List<Competition> getCompetitions( Event event );
+
+    CompetitionEntrant getCompetitionEntrant( long id );
     List<? extends CompetitionEntrant> getCompetitionEntrants(Competition competition );
+
     boolean storeCompetitionEntrant(Competition competition,
                                     CompetitionEntrant competitionEntrant);
     boolean storeCompetitionEntrants(Competition competition,
                                      List<CompetitionEntrant> competitionEntrants);
+
     List<Heat> getCompetitionHeats(Competition competition);
 
-    List<Member> getMembers();
     Member getMember( long id );
-    List<University> getUniversities();
+    List<Member> getMembers();
+
     University getUniversity( long id );
+    List<University> getUniversities();
+
     List<Member> getEventAttendees( Event event );
 
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import uk.co.swa.swapp.model.Competition;
 import uk.co.swa.swapp.model.CompetitionEntrant;
@@ -12,6 +11,7 @@ import uk.co.swa.swapp.model.CompetitionType;
 import uk.co.swa.swapp.model.Event;
 import uk.co.swa.swapp.model.Heat;
 import uk.co.swa.swapp.model.Member;
+import uk.co.swa.swapp.model.Team;
 import uk.co.swa.swapp.model.University;
 
 /**
@@ -22,6 +22,7 @@ public class MockAppStore implements AppStore {
     List<CompetitionType> competitionTypeList;
     List<University> universityList;
     List<Member> memberList;
+    List<Team> teamList;
 
     List<Event> eventList;
     Map<Event, List<Competition>> competitionMap;
@@ -31,10 +32,12 @@ public class MockAppStore implements AppStore {
         this.competitionTypeList = new ArrayList<>();
         this.universityList = new ArrayList<>();
         this.memberList = new ArrayList<>();
+        this.teamList = new ArrayList<>();
 
         this.populateCompetitionTypeList();
         this.populateUniversityList();
         this.populateMemberList();
+        this.populateTeamList();
 
         this.eventList = new ArrayList<>();
         this.competitionMap = new HashMap<>();
@@ -42,6 +45,7 @@ public class MockAppStore implements AppStore {
 
         this.populateEventList();
         this.populateCompetitionMap();
+        this.populateCompetitionEntrantMap();
     }
 
     @Override
@@ -89,11 +93,6 @@ public class MockAppStore implements AppStore {
     }
 
     @Override
-    public List<Competition> getCompetitions(Event event) {
-        return this.competitionMap.get(event);
-    }
-
-    @Override
     public Competition getCompetition(long id) {
         for (List<Competition> competitionList : this.competitionMap.values()){
             for (Competition competition : competitionList) {
@@ -107,13 +106,26 @@ public class MockAppStore implements AppStore {
     }
 
     @Override
-    public List<? extends CompetitionEntrant> getCompetitionEntrants(Competition competition) {
-        Random rand = new Random();
-        if (competition.getCompetitionType().toString().contains("Team")) {
-            return this.competitorMap.get(competition);
-        } else {
-            return this.getMembers().subList(rand.nextInt(5), rand.nextInt(9) + 6);
+    public List<Competition> getCompetitions(Event event) {
+        return this.competitionMap.get(event);
+    }
+
+    @Override
+    public CompetitionEntrant getCompetitionEntrant(long id) {
+        for (List<CompetitionEntrant> competitionEntrantList : this.competitorMap.values()){
+            for (CompetitionEntrant competitionEntrant : competitionEntrantList) {
+                if (competitionEntrant.getAppID() == id) {
+                    return competitionEntrant;
+                }
+            }
         }
+
+        return null;
+    }
+
+    @Override
+    public List<? extends CompetitionEntrant> getCompetitionEntrants(Competition competition) {
+        return this.competitorMap.get(competition);
     }
 
     @Override
@@ -187,21 +199,29 @@ public class MockAppStore implements AppStore {
 
     private void populateMemberList() {
         this.memberList.add(new Member(1, "Adam Franklin", this.getUniversity(15)));
-        this.memberList.add(new Member(1, "Ollie Johnson", this.getUniversity(15)));
-        this.memberList.add(new Member(1, "Roisin Irish", this.getUniversity(15)));
-        this.memberList.add(new Member(1, "Kate Simpson", this.getUniversity(15)));
-        this.memberList.add(new Member(1, "Ben Jones", this.getUniversity(15)));
-        this.memberList.add(new Member(1, "Jane Janerson", this.getUniversity(15)));
-        this.memberList.add(new Member(1, "Olives Are-Cool", this.getUniversity(8)));
-        this.memberList.add(new Member(1, "Jenny Bradford", this.getUniversity(8)));
-        this.memberList.add(new Member(1, "Larry Page", this.getUniversity(3)));
-        this.memberList.add(new Member(1, "Louis LaLa", this.getUniversity(3)));
-        this.memberList.add(new Member(1, "Ben Smith", this.getUniversity(12)));
-        this.memberList.add(new Member(1, "Jack Jackson", this.getUniversity(5)));
-        this.memberList.add(new Member(1, "Sam Sampson", this.getUniversity(12)));
-        this.memberList.add(new Member(1, "Adam Small", this.getUniversity(5)));
-        this.memberList.add(new Member(1, "Ann Anderson", this.getUniversity(5)));
-        this.memberList.add(new Member(1, "Anthony Ant", this.getUniversity(8)));
+        this.memberList.add(new Member(2, "Ollie Johnson", this.getUniversity(15)));
+        this.memberList.add(new Member(3, "Roisin Irish", this.getUniversity(15)));
+        this.memberList.add(new Member(4, "Kate Simpson", this.getUniversity(15)));
+        this.memberList.add(new Member(5, "Ben Jones", this.getUniversity(15)));
+        this.memberList.add(new Member(6, "Jane Janerson", this.getUniversity(15)));
+        this.memberList.add(new Member(7, "Olives Are-Cool", this.getUniversity(8)));
+        this.memberList.add(new Member(8, "Jenny Bradford", this.getUniversity(8)));
+        this.memberList.add(new Member(9, "Larry Page", this.getUniversity(3)));
+        this.memberList.add(new Member(10, "Louis LaLa", this.getUniversity(3)));
+        this.memberList.add(new Member(11, "Ben Smith", this.getUniversity(12)));
+        this.memberList.add(new Member(12, "Jack Jackson", this.getUniversity(5)));
+        this.memberList.add(new Member(13, "Sam Sampson", this.getUniversity(12)));
+        this.memberList.add(new Member(14, "Adam Small", this.getUniversity(5)));
+        this.memberList.add(new Member(15, "Ann Anderson", this.getUniversity(5)));
+        this.memberList.add(new Member(16, "Anthony Ant", this.getUniversity(8)));
+    }
+
+    private void populateTeamList() {
+        this.teamList.add(new Team(1, this.getUniversity(7), 1));
+        this.teamList.add(new Team(2, this.getUniversity(4), 1));
+        this.teamList.add(new Team(3, this.getUniversity(12), 1));
+        this.teamList.add(new Team(4, this.getUniversity(12), 2));
+        this.teamList.add(new Team(5, this.getUniversity(15), 1));
     }
 
     private void populateEventList() {
@@ -243,6 +263,20 @@ public class MockAppStore implements AppStore {
             }
         }
 
+    }
+
+    private void populateCompetitionEntrantMap() {
+        this.competitorMap.get(this.getCompetition(1)).add(this.memberList.get(13));
+        this.competitorMap.get(this.getCompetition(1)).add(this.memberList.get(7));
+        this.competitorMap.get(this.getCompetition(1)).add(this.memberList.get(4));
+        this.competitorMap.get(this.getCompetition(1)).add(this.memberList.get(15));
+        this.competitorMap.get(this.getCompetition(1)).add(this.memberList.get(2));
+        this.competitorMap.get(this.getCompetition(1)).add(this.memberList.get(11));
+
+        this.competitorMap.get(this.getCompetition(2)).add(this.teamList.get(1));
+        this.competitorMap.get(this.getCompetition(2)).add(this.teamList.get(3));
+        this.competitorMap.get(this.getCompetition(2)).add(this.teamList.get(0));
+        this.competitorMap.get(this.getCompetition(2)).add(this.teamList.get(4));
     }
 
 }

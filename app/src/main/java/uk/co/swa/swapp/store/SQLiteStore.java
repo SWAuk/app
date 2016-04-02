@@ -48,6 +48,11 @@ public class SQLiteStore implements AppStore {
     }
 
     @Override
+    public CompetitionEntrant getCompetitionEntrant(long id) {
+        return null;
+    }
+
+    @Override
     public List<? extends CompetitionEntrant> getCompetitionEntrants(Competition competition) {
         return null;
     }

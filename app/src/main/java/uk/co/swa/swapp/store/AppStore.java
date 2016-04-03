@@ -14,20 +14,20 @@ public interface AppStore {
     List<Event> getEvents();
     List<Event> getEvents(int limit);
 
-    List<CompetitionType> getCompetitionTypes();
     CompetitionType getCompetitionType( long id );
+    List<CompetitionType> getCompetitionTypes();
 
     Competition getCompetition( long id );
     List<Competition> getCompetitions( Event event );
 
     CompetitionEntrant getCompetitionEntrant( long id );
     List<? extends CompetitionEntrant> getCompetitionEntrants(Competition competition );
-
     boolean storeCompetitionEntrant(Competition competition,
                                     CompetitionEntrant competitionEntrant);
     boolean storeCompetitionEntrants(Competition competition,
                                      List<CompetitionEntrant> competitionEntrants);
 
+    Heat getCompetitionHeat(long id);
     List<Heat> getCompetitionHeats(Competition competition);
 
     Member getMember( long id );

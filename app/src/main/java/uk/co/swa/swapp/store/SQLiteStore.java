@@ -13,6 +13,11 @@ import uk.co.swa.swapp.model.University;
 public class SQLiteStore implements AppStore {
 
     @Override
+    public Event getEvent(long id) {
+        return null;
+    }
+
+    @Override
     public List<Event> getEvents() {
         return null;
     }
@@ -23,7 +28,7 @@ public class SQLiteStore implements AppStore {
     }
 
     @Override
-    public Event getEvent(long id) {
+    public CompetitionType getCompetitionType(long id) {
         return null;
     }
 
@@ -33,17 +38,12 @@ public class SQLiteStore implements AppStore {
     }
 
     @Override
-    public CompetitionType getCompetitionType(long id) {
+    public Competition getCompetition(long id) {
         return null;
     }
 
     @Override
     public List<Competition> getCompetitions(Event event) {
-        return null;
-    }
-
-    @Override
-    public Competition getCompetition(long id) {
         return null;
     }
 
@@ -68,12 +68,12 @@ public class SQLiteStore implements AppStore {
     }
 
     @Override
-    public List<Heat> getCompetitionHeats(Competition competition) {
+    public Heat getCompetitionHeat(long id) {
         return null;
     }
 
     @Override
-    public List<Member> getMembers() {
+    public List<Heat> getCompetitionHeats(Competition competition) {
         return null;
     }
 
@@ -83,12 +83,17 @@ public class SQLiteStore implements AppStore {
     }
 
     @Override
-    public List<University> getUniversities() {
+    public List<Member> getMembers() {
         return null;
     }
 
     @Override
     public University getUniversity(long id) {
+        return null;
+    }
+
+    @Override
+    public List<University> getUniversities() {
         return null;
     }
 

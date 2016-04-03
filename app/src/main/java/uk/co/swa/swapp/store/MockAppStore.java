@@ -48,6 +48,17 @@ public class MockAppStore implements AppStore {
     }
 
     @Override
+    public Event getEvent(long id) {
+        for (Event event : this.eventList) {
+            if (event.getAppID() == id) {
+                return event;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
     public List<Event> getEvents() {
         return new ArrayList<>(this.eventList);
     }
@@ -65,10 +76,10 @@ public class MockAppStore implements AppStore {
     }
 
     @Override
-    public Event getEvent(long id) {
-        for (Event event : this.eventList) {
-            if (event.getAppID() == id) {
-                return event;
+    public CompetitionType getCompetitionType(long id) {
+        for (CompetitionType competitionType : this.competitionTypeList) {
+            if (competitionType.getAppID() == id) {
+                return competitionType;
             }
         }
 
@@ -78,17 +89,6 @@ public class MockAppStore implements AppStore {
     @Override
     public List<CompetitionType> getCompetitionTypes() {
         return new ArrayList<>(this.competitionTypeList);
-    }
-
-    @Override
-    public CompetitionType getCompetitionType(long id) {
-        for (CompetitionType competitionType : this.competitionTypeList) {
-            if (competitionType.getAppID() == id) {
-                return competitionType;
-            }
-        }
-
-        return null;
     }
 
     @Override
@@ -110,12 +110,10 @@ public class MockAppStore implements AppStore {
     }
 
     @Override
-    public CompetitionEntrant getCompetitionEntrant(long id) {
-        for (List<CompetitionEntrant> competitionEntrantList : this.competitionEntrantsMap.values()){
-            for (CompetitionEntrant competitionEntrant : competitionEntrantList) {
-                if (competitionEntrant.getAppID() == id) {
-                    return competitionEntrant;
-                }
+    public CompetitionEntrant getCompetitionEntrant(Competition competition, long id) {
+        for (CompetitionEntrant competitionEntrant : this.competitionEntrantsMap.get(competition)) {
+            if (competitionEntrant.getAppID() == id) {
+                return competitionEntrant;
             }
         }
 
@@ -128,15 +126,29 @@ public class MockAppStore implements AppStore {
     }
 
     @Override
-    public boolean storeCompetitionEntrant(Competition competition,
-                                           CompetitionEntrant competitionEntrant) {
+    public boolean addCompetitionEntrant(Competition competition,
+                                         CompetitionEntrant competitionEntrant) {
         return this.competitionEntrantsMap.get(competition).add(competitionEntrant);
     }
 
     @Override
-    public boolean storeCompetitionEntrants(Competition competition,
-                                            List<CompetitionEntrant> competitionEntrants) {
+    public boolean addCompetitionEntrants(Competition competition,
+                                          List<CompetitionEntrant> competitionEntrants) {
         return this.competitionEntrantsMap.get(competition).addAll(competitionEntrants);
+    }
+
+    @Override
+    public boolean removeCompetitionEntrant(Competition competition,
+                                            CompetitionEntrant competitionEntrant) {
+
+        return this.competitionEntrantsMap.get(competition).remove(competitionEntrant);
+    }
+
+    @Override
+    public boolean removeCompetitionEntrants(Competition competition,
+                                             List<CompetitionEntrant> competitionEntrants) {
+
+        return this.competitionEntrantsMap.get(competition).removeAll(competitionEntrants);
     }
 
     @Override
@@ -159,6 +171,12 @@ public class MockAppStore implements AppStore {
 
     @Override
     public Member getMember(long id) {
+        for (Member member : this.memberList) {
+            if (member.getAppID() == id) {
+                return member;
+            }
+        }
+
         return null;
     }
 
@@ -169,12 +187,34 @@ public class MockAppStore implements AppStore {
 
     @Override
     public University getUniversity(long id) {
+        for (University university : this.universityList) {
+            if (university.getAppID() == id) {
+                return university;
+            }
+        }
+
         return null;
     }
 
     @Override
     public List<University> getUniversities() {
         return new ArrayList<>(this.universityList);
+    }
+
+    @Override
+    public Team getTeam(long id) {
+        for (Team team : this.teamList) {
+            if (team.getAppID() == id) {
+                return team;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<Team> getTeams() {
+        return new ArrayList<>(this.teamList);
     }
 
     @Override
@@ -279,17 +319,17 @@ public class MockAppStore implements AppStore {
     }
 
     private void populateCompetitionEntrantMap() {
-        this.competitionEntrantsMap.get(this.getCompetition(1)).add(this.memberList.get(13));
-        this.competitionEntrantsMap.get(this.getCompetition(1)).add(this.memberList.get(7));
-        this.competitionEntrantsMap.get(this.getCompetition(1)).add(this.memberList.get(4));
-        this.competitionEntrantsMap.get(this.getCompetition(1)).add(this.memberList.get(15));
-        this.competitionEntrantsMap.get(this.getCompetition(1)).add(this.memberList.get(2));
-        this.competitionEntrantsMap.get(this.getCompetition(1)).add(this.memberList.get(11));
+        this.competitionEntrantsMap.get(this.getCompetition(1)).add(this.getMember(13));
+        this.competitionEntrantsMap.get(this.getCompetition(1)).add(this.getMember(7));
+        this.competitionEntrantsMap.get(this.getCompetition(1)).add(this.getMember(4));
+        this.competitionEntrantsMap.get(this.getCompetition(1)).add(this.getMember(15));
+        this.competitionEntrantsMap.get(this.getCompetition(1)).add(this.getMember(2));
+        this.competitionEntrantsMap.get(this.getCompetition(1)).add(this.getMember(11));
 
-        this.competitionEntrantsMap.get(this.getCompetition(2)).add(this.teamList.get(1));
-        this.competitionEntrantsMap.get(this.getCompetition(2)).add(this.teamList.get(3));
-        this.competitionEntrantsMap.get(this.getCompetition(2)).add(this.teamList.get(0));
-        this.competitionEntrantsMap.get(this.getCompetition(2)).add(this.teamList.get(4));
+        this.competitionEntrantsMap.get(this.getCompetition(2)).add(this.getTeam(1));
+        this.competitionEntrantsMap.get(this.getCompetition(2)).add(this.getTeam(3));
+        this.competitionEntrantsMap.get(this.getCompetition(2)).add(this.getTeam(5));
+        this.competitionEntrantsMap.get(this.getCompetition(2)).add(this.getTeam(4));
     }
 
 }

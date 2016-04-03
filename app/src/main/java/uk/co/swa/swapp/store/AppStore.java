@@ -20,12 +20,16 @@ public interface AppStore {
     Competition getCompetition( long id );
     List<Competition> getCompetitions( Event event );
 
-    CompetitionEntrant getCompetitionEntrant( long id );
+    CompetitionEntrant getCompetitionEntrant(Competition competition, long id );
     List<? extends CompetitionEntrant> getCompetitionEntrants(Competition competition );
-    boolean storeCompetitionEntrant(Competition competition,
-                                    CompetitionEntrant competitionEntrant);
-    boolean storeCompetitionEntrants(Competition competition,
-                                     List<CompetitionEntrant> competitionEntrants);
+    boolean addCompetitionEntrant(Competition competition,
+                                  CompetitionEntrant competitionEntrant);
+    boolean addCompetitionEntrants(Competition competition,
+                                   List<CompetitionEntrant> competitionEntrants);
+    boolean removeCompetitionEntrant(Competition competition,
+                                     CompetitionEntrant competitionEntrant);
+    boolean removeCompetitionEntrants(Competition competition,
+                                      List<CompetitionEntrant> competitionEntrants);
 
     Heat getCompetitionHeat(long id);
     List<Heat> getCompetitionHeats(Competition competition);
@@ -35,6 +39,9 @@ public interface AppStore {
 
     University getUniversity( long id );
     List<University> getUniversities();
+
+    Team getTeam( long id );
+    List<Team> getTeams();
 
     List<Member> getEventAttendees( Event event );
 

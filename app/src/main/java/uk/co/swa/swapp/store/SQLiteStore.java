@@ -8,6 +8,7 @@ import uk.co.swa.swapp.model.CompetitionType;
 import uk.co.swa.swapp.model.Event;
 import uk.co.swa.swapp.model.Heat;
 import uk.co.swa.swapp.model.Member;
+import uk.co.swa.swapp.model.Team;
 import uk.co.swa.swapp.model.University;
 
 public class SQLiteStore implements AppStore {
@@ -48,7 +49,7 @@ public class SQLiteStore implements AppStore {
     }
 
     @Override
-    public CompetitionEntrant getCompetitionEntrant(long id) {
+    public CompetitionEntrant getCompetitionEntrant(Competition competition, long id) {
         return null;
     }
 
@@ -58,12 +59,22 @@ public class SQLiteStore implements AppStore {
     }
 
     @Override
-    public boolean storeCompetitionEntrant(Competition competition, CompetitionEntrant competitionEntrant) {
+    public boolean addCompetitionEntrant(Competition competition, CompetitionEntrant competitionEntrant) {
         return false;
     }
 
     @Override
-    public boolean storeCompetitionEntrants(Competition competition, List<CompetitionEntrant> competitionEntrants) {
+    public boolean addCompetitionEntrants(Competition competition, List<CompetitionEntrant> competitionEntrants) {
+        return false;
+    }
+
+    @Override
+    public boolean removeCompetitionEntrant(Competition competition, CompetitionEntrant competitionEntrant) {
+        return false;
+    }
+
+    @Override
+    public boolean removeCompetitionEntrants(Competition competition, List<CompetitionEntrant> competitionEntrants) {
         return false;
     }
 
@@ -94,6 +105,16 @@ public class SQLiteStore implements AppStore {
 
     @Override
     public List<University> getUniversities() {
+        return null;
+    }
+
+    @Override
+    public Team getTeam(long id) {
+        return null;
+    }
+
+    @Override
+    public List<Team> getTeams() {
         return null;
     }
 

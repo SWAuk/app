@@ -19,11 +19,13 @@ import uk.co.swa.swapp.God;
 import uk.co.swa.swapp.R;
 import uk.co.swa.swapp.model.Competition;
 import uk.co.swa.swapp.model.CompetitionEntrant;
+import uk.co.swa.swapp.store.AppStore;
 
 public class CompetitorListActivity extends AppCompatActivity {
 
-    private God god;
+    private AppStore appStore;
     private boolean isTeam;
+    private Competition competition;
 
     private ArrayAdapter competitorListAdapter;
 
@@ -32,7 +34,7 @@ public class CompetitorListActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        this.god = God.getInstance();
+        this.appStore = God.getInstance().getAppStore();
 
         // get the competitionID passed from the activity calling us
         long competitionID = getIntent().getLongExtra("competitionID", -1);
@@ -43,23 +45,23 @@ public class CompetitorListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Competition competition = this.god.getAppStore().getCompetition(competitionID);
+        this.competition = this.appStore.getCompetition(competitionID);
 
         // TODO: this seems a bit of a hack checking it contains a String?
         // check whether it is a team competition type or not.
         this.isTeam = competition.getCompetitionType().toString().contains("Team");
 
         List<? extends CompetitionEntrant> competitionEntrantList =
-                this.god.getAppStore().getCompetitionEntrants(competition);
+                this.appStore.getCompetitionEntrants(competition);
 
         ListView competitorListView = (ListView) findViewById(R.id.competitorListView);
 
-        this.competitorListAdapter = new SwaObjectAdapter(this,
+        this.competitorListAdapter = new SwaObjectAdapter(competitorListView.getContext(),
                 android.R.layout.simple_list_item_1, competitionEntrantList);
 
-        competitorListView.setAdapter(competitorListAdapter);
+         competitorListView.setAdapter(competitorListAdapter);
 
-        this.createFloatingActionButton();
+        this.setFloatingActionButtonIcon();
         competitorListView.setOnItemClickListener(this.onCompetitorListItemClick());
         competitorListView.setOnItemLongClickListener(this.onCompetitorListItemLongClick());
 
@@ -75,9 +77,8 @@ public class CompetitorListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void createFloatingActionButton() {
+    private void setFloatingActionButtonIcon() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(this.onFabClick());
 
         if (this.isTeam) {
             // set the Floating Action Button icon to group to indicate adding teams
@@ -86,17 +87,12 @@ public class CompetitorListActivity extends AppCompatActivity {
         }
     }
 
-    private View.OnClickListener onFabClick() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Not implemented yet...", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        };
+    public void onFabClick(View view) {
+        Snackbar.make(view, "Not implemented yet...", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
     }
 
-    private AdapterView.OnItemClickListener onCompetitorListItemClick() {
+    public AdapterView.OnItemClickListener onCompetitorListItemClick() {
         return new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long appID) {
@@ -120,7 +116,13 @@ public class CompetitorListActivity extends AppCompatActivity {
 
             @Override
             public void onDeleteClicked(AdapterView<?> parent, View view, int position, long appID) {
-                Snackbar.make(view, "Delete not implemented yet...",
+                CompetitionEntrant competitionEntrant =
+                        appStore.getCompetitionEntrant(competition, appID);
+                competitorListAdapter.remove(competitionEntrant);
+                appStore.removeCompetitionEntrant(competition, competitionEntrant);
+
+                Snackbar.make(view, competitionEntrant.getName() + " unregistered from " +
+                        competition + " competition.",
                         Snackbar.LENGTH_LONG).setAction(null, null).show();
             }
         };

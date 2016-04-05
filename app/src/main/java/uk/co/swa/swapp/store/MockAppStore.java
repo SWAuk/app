@@ -26,6 +26,7 @@ public class MockAppStore implements AppStore {
     Map<Competition, List<CompetitionEntrant>> competitionEntrantsMap;
     Map<Competition, List<Heat>> competitionHeatsMap;
     Map<Heat, List<CompetitionEntrant>> heatEntrantsMap;
+    Map<Event, List<Member>> eventAttendeesMap;
 
     public MockAppStore() {
         this.competitionTypeList = new ArrayList<>();
@@ -45,6 +46,7 @@ public class MockAppStore implements AppStore {
         this.populateEventList();
         this.populateCompetitionMap();
         this.populateCompetitionEntrantMap();
+        this.populateEventAttendeesMap();
     }
 
     @Override
@@ -219,7 +221,22 @@ public class MockAppStore implements AppStore {
 
     @Override
     public List<Member> getEventAttendees(Event event) {
-        return null;
+        // TODO: implement properly
+        // return this.eventAttendeesMap.get(event);
+        return this.memberList;
+    }
+
+    @Override
+    public List<Member> getEventAttendees(Competition competition) {
+        for (Event event : this.competitionMap.keySet()) {
+            if (this.competitionMap.get(event).equals(competition)) {
+                return this.getEventAttendees(event);
+            }
+        }
+
+        // TODO: implement properly
+        // return null;
+        return this.memberList;
     }
 
 
@@ -256,7 +273,7 @@ public class MockAppStore implements AppStore {
         this.memberList.add(new Member(3, "Roisin Irish", this.getUniversity(15)));
         this.memberList.add(new Member(4, "Kate Simpson", this.getUniversity(15)));
         this.memberList.add(new Member(5, "Ben Jones", this.getUniversity(15)));
-        this.memberList.add(new Member(6, "Jane Janerson", this.getUniversity(15)));
+        this.memberList.add(new Member(6, "Jane Janerson", this.getUniversity(8)));
         this.memberList.add(new Member(7, "Olives Are-Cool", this.getUniversity(8)));
         this.memberList.add(new Member(8, "Jenny Bradford", this.getUniversity(8)));
         this.memberList.add(new Member(9, "Larry Page", this.getUniversity(3)));
@@ -330,6 +347,10 @@ public class MockAppStore implements AppStore {
         this.competitionEntrantsMap.get(this.getCompetition(2)).add(this.getTeam(3));
         this.competitionEntrantsMap.get(this.getCompetition(2)).add(this.getTeam(5));
         this.competitionEntrantsMap.get(this.getCompetition(2)).add(this.getTeam(4));
+    }
+
+    private void populateEventAttendeesMap() {
+
     }
 
 }

@@ -44,5 +44,6 @@ public interface AppStore {
     List<Team> getTeams();
 
     List<Member> getEventAttendees( Event event );
+    List<Member> getEventAttendees( Competition competition );
 
 }

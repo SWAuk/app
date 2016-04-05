@@ -123,4 +123,9 @@ public class SQLiteStore implements AppStore {
         return null;
     }
 
+    @Override
+    public List<Member> getEventAttendees(Competition competition) {
+        return null;
+    }
+
 }

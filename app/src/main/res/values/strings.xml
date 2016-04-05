@@ -5,6 +5,7 @@
     <string name="title_activity_events">Events</string>
     <string name="title_activity_competitions">Competitions</string>
     <string name="title_activity_competitors">Competitors</string>
+    <string name="title_activity_select_member">Select Member</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

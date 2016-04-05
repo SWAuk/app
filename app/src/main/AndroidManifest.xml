@@ -14,6 +14,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -45,6 +46,15 @@
                 android:value=".controller.CompetitionListActivity" />
         </activity>
         <activity android:name=".controller.CompetitionActivity" />
+        <activity
+            android:name=".controller.SelectMemberActivity"
+            android:label="@string/title_activity_select_member"
+            android:parentActivityName=".controller.CompetitionActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uk.co.swa.swapp.controller.CompetitionActivity" />
+        </activity>
     </application>
 
 </manifest>

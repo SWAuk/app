@@ -112,6 +112,16 @@ public class MockAppStore implements AppStore {
     }
 
     @Override
+    public boolean addCompetition(Event event, Competition competition) {
+        return this.competitionMap.get(event).add(competition);
+    }
+
+    @Override
+    public boolean removeCompetition(Event event, Competition competition) {
+        return this.competitionMap.get(event).remove(competition);
+    }
+
+    @Override
     public CompetitionEntrant getCompetitionEntrant(Competition competition, long id) {
         for (CompetitionEntrant competitionEntrant : this.competitionEntrantsMap.get(competition)) {
             if (competitionEntrant.getAppID() == id) {

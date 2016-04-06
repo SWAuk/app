@@ -19,6 +19,8 @@ public interface AppStore {
 
     Competition getCompetition( long id );
     List<Competition> getCompetitions( Event event );
+    boolean addCompetition( Event event, Competition competition );
+    boolean removeCompetition( Event event, Competition competition);
 
     CompetitionEntrant getCompetitionEntrant(Competition competition, long id );
     List<? extends CompetitionEntrant> getCompetitionEntrants(Competition competition );

@@ -119,7 +119,7 @@ public class CompetitionListActivity extends AppCompatActivity {
                 ListView listView = ((AlertDialog) dialog).getListView();
                 SwaObjectAdapter adapter = (SwaObjectAdapter) listView.getAdapter();
                 CompetitionType competitionType = (CompetitionType) adapter.getItem(which);
-                Competition competition = new Competition(competitionType);
+                Competition competition = new Competition(competitionType, event);
                 competitionsAdapter.add(competition);
                 appStore.addCompetition(event, competition);
 

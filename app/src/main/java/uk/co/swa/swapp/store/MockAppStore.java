@@ -1,6 +1,7 @@
 package uk.co.swa.swapp.store;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -319,19 +320,19 @@ public class MockAppStore implements AppStore {
     private void populateEventList() {
 
         // 2014/15
-        this.eventList.add(new Event(6, "BUCS Nationals"));
-        this.eventList.add(new Event(5, "Nottingham"));
-        this.eventList.add(new Event(4, "Cardiff"));
-        this.eventList.add(new Event(3, "Bangor"));
-        this.eventList.add(new Event(2, "PlymEx"));
-        this.eventList.add(new Event(1, "BrUWE"));
+        this.eventList.add(new Event(6, "BUCS Nationals", new Date()));
+        this.eventList.add(new Event(5, "Nottingham", new Date()));
+        this.eventList.add(new Event(4, "Cardiff", new Date()));
+        this.eventList.add(new Event(3, "Bangor", new Date()));
+        this.eventList.add(new Event(2, "PlymEx", new Date()));
+        this.eventList.add(new Event(1, "BrUWE", new Date()));
 
         // 2015/16
-        this.eventList.add(new Event(11, "Disney Presents Cardiff Wave"));
-        this.eventList.add(new Event(10, "Nottingham Pondlife"));
-        this.eventList.add(new Event(9, "BrUWE Wet Dreams"));
-        this.eventList.add(new Event(8, "Bangor"));
-        this.eventList.add(new Event(7, "Up the Brum!"));
+        this.eventList.add(new Event(11, "Disney Presents Cardiff Wave", new Date()));
+        this.eventList.add(new Event(10, "Nottingham Pondlife", new Date()));
+        this.eventList.add(new Event(9, "BrUWE Wet Dreams", new Date()));
+        this.eventList.add(new Event(8, "Bangor", new Date()));
+        this.eventList.add(new Event(7, "Up the Brum!", new Date()));
 
         // foreach of the events add an empty ArrayList to the competitionMap
         for (Event event : this.eventList) {
@@ -342,10 +343,10 @@ public class MockAppStore implements AppStore {
     private void populateCompetitionMap() {
 
         // add competitions to "Disney Presents Cardiff Wave"
-        this.competitionMap.get(getEvent(11)).add(new Competition(1, getCompetitionType(6)));
+        this.competitionMap.get(getEvent(11)).add(new Competition(1, getCompetitionType(6), getEvent(11)));
 
         // add competitions to "Nottingham Pondlife"
-        this.competitionMap.get(getEvent(10)).add(new Competition(2, getCompetitionType(5)));
+        this.competitionMap.get(getEvent(10)).add(new Competition(2, getCompetitionType(5), getEvent(10)));
 
 
         // foreach of the competitions add an empty ArrayList to the competitionEntrantsMap

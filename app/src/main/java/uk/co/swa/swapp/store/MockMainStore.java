@@ -2,6 +2,7 @@ package uk.co.swa.swapp.store;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,11 +68,11 @@ public class MockMainStore implements MainStore {
         this.members.put(13, new Member(13, "Adam Small", this.universities.get(5)));
         this.members.put(14, new Member(14, "Ann Bar", this.universities.get(5)));
 
-        this.events.put(1, new Event(1, "Disney Presents Cardiff Wave"));
-        this.events.put(2, new Event(2, "Nottingham Pondlife"));
-        this.events.put(3, new Event(3, "BrUWE Wet Dreams"));
-        this.events.put(4, new Event(4, "Bangor"));
-        this.events.put(5, new Event(5, "Up the Brum!"));
+        this.events.put(1, new Event(1, "Disney Presents Cardiff Wave", new Date()));
+        this.events.put(2, new Event(2, "Nottingham Pondlife", new Date()));
+        this.events.put(3, new Event(3, "BrUWE Wet Dreams", new Date()));
+        this.events.put(4, new Event(4, "Bangor", new Date()));
+        this.events.put(5, new Event(5, "Up the Brum!", new Date()));
 
         this.eventAttendees.put(1, new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7)));
         this.eventAttendees.put(2, new ArrayList<>(Arrays.asList(1, 2, 3, 4, 8, 9, 10, 11)));

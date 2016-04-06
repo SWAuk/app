@@ -1,53 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/relativeLayout"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".controller.CompetitionActivity">
+    android:fitsSystemWindows="true"
+    tools:context="uk.co.swa.swapp.controller.CompetitionActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/type_label"
-        android:id="@+id/typeTextView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="45dp"/>
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/typeSpinner"
-        android:spinnerMode="dropdown"
-        android:layout_alignBaseline="@+id/typeTextView"
-        android:layout_alignBottom="@+id/typeTextView"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="20dp" />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+    </android.support.design.widget.AppBarLayout>
 
-    <!-- TODO: Don't use buttons, use the back arrow and a tick in the ActionBar instead
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_alignTop="@+id/button2"
-        android:layout_toStartOf="@+id/button2"
-        android:layout_marginEnd="15dp" />
+    <include layout="@layout/content_competition" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button2"
-        android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/lengthEditText"
-        android:layout_marginBottom="76dp" />
-        -->
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -45,7 +45,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".controller.CompetitionListActivity" />
         </activity>
-        <activity android:name=".controller.CompetitionActivity" />
+        <activity
+            android:name=".controller.CompetitionActivity"
+            android:label="@string/title_activity_competition"
+            android:parentActivityName=".controller.CompetitionListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uk.co.swa.swapp.controller.CompetitionListActivity" />
+        </activity>
         <activity
             android:name=".controller.SelectMemberActivity"
             android:label="@string/title_activity_select_member"

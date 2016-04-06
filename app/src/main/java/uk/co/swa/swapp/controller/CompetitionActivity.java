@@ -80,8 +80,7 @@ public class CompetitionActivity extends AppCompatActivity {
     }
 
     private void saveCompetition() {
-        Competition competition = new Competition((CompetitionType) typeSpinner.getSelectedItem());
-        Log.i(this.getLocalClassName(), "saveCompetition(): " + competition.toString());
+        Log.i(this.getLocalClassName(), "saveCompetition(): ");
     }
 
 }

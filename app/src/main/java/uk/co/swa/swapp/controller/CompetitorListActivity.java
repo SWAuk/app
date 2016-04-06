@@ -1,5 +1,6 @@
 package uk.co.swa.swapp.controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -59,9 +60,9 @@ public class CompetitorListActivity extends AppCompatActivity {
         this.competitorListAdapter = new SwaObjectAdapter(competitorListView.getContext(),
                 android.R.layout.simple_list_item_1, competitionEntrantList);
 
-         competitorListView.setAdapter(competitorListAdapter);
+        competitorListView.setAdapter(competitorListAdapter);
 
-        this.setFloatingActionButtonIcon();
+        this.setupFloatingActionButton();
         competitorListView.setOnItemClickListener(this.onCompetitorListItemClick());
         competitorListView.setOnItemLongClickListener(this.onCompetitorListItemLongClick());
 
@@ -77,19 +78,36 @@ public class CompetitorListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setFloatingActionButtonIcon() {
+    private void setupFloatingActionButton() {
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         if (this.isTeam) {
+
             // set the Floating Action Button icon to group to indicate adding teams
             fab.setImageDrawable(ContextCompat.getDrawable(this,
                     R.drawable.ic_group_add_white_24dp));
-        }
-    }
 
-    public void onFabClick(View view) {
-        Snackbar.make(view, "Not implemented yet...", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Add team not implemented yet...", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            });
+
+        } else {
+
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(CompetitorListActivity.this, SelectMemberActivity.class);
+                    intent.putExtra("competitionID", competition.getAppID());
+                    startActivity(intent);
+                }
+            });
+
+        }
     }
 
     public AdapterView.OnItemClickListener onCompetitorListItemClick() {

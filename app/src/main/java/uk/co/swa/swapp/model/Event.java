@@ -1,17 +1,21 @@
 package uk.co.swa.swapp.model;
 
+import java.util.Date;
+
 public class Event implements SwaObject {
 
     private long appID;
     private String eventName;
+    private Date eventDate;
 
-    public Event(long appID, String eventName) {
+    public Event(long appID, String eventName, Date eventDate) {
         this.appID = appID;
         this.eventName = eventName;
+        this.eventDate = eventDate;
     }
 
-    public Event(String eventName) {
-        this(-1, eventName);
+    public Event(String eventName, Date eventDate) {
+        this(-1, eventName, eventDate);
     }
 
     @Override
@@ -32,33 +36,13 @@ public class Event implements SwaObject {
         this.eventName = eventName;
     }
 
-//    public Competition getCompetition(long id) {
-//        return null;
-//    }
+    public Date getEventDate() {
+        return eventDate;
+    }
 
-//    public List<Competition> getAllCompetitions() {
-//        return null;
-//    }
-
-//    public boolean addCompetition(Competition... competition) {
-//        return false;
-//    }
-
-//    public boolean addCompetitions(List<Competition> competitions) {
-//        return false;
-//    }
-
-//    public boolean removeCompetition(Competition competition) {
-//        return false;
-//    }
-
-//    public Competition removeCompetition(int index) {
-//        return null;
-//    }
-
-//    public boolean removeCompetitions(List<Competition> competitions) {
-//        return false;
-//    }
+    public void setEventDate(Date eventDate) {
+        this.eventDate = eventDate;
+    }
 
     @Override
     public String toString() {

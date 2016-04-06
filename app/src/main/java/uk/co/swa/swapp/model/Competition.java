@@ -6,28 +6,25 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import uk.co.swa.swapp.God;
-
 public class Competition implements SwaObject {
 
-    private God god;
     private long appID;
     private CompetitionType competitionType;
+    private Event event;
 
-    public Competition(long appID, CompetitionType competitionType) {
+    public Competition(long appID, CompetitionType competitionType, Event event) {
         this.appID = appID;
         this.competitionType = competitionType;
-
-        this.god = God.getInstance();
+        this.event = event;
     }
 
-    public Competition(CompetitionType competitionType) {
-        this(-1, competitionType);
+    public Competition(CompetitionType competitionType, Event event) {
+        this(-1, competitionType, event);
     }
 
     @Override
     public long getAppID() {
-        return this.appID;
+        return appID;
     }
 
     @Override
@@ -36,11 +33,19 @@ public class Competition implements SwaObject {
     }
 
     public CompetitionType getCompetitionType() {
-        return this.competitionType;
+        return competitionType;
     }
 
     public void setCompetitionType(CompetitionType competitionType) {
         this.competitionType = competitionType;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
     // TODO: This doesn't belong here
@@ -52,7 +57,7 @@ public class Competition implements SwaObject {
             throw new IllegalArgumentException("There has to be more than 1 entrant in a heat.");
         }
 
-        List<? extends CompetitionEntrant> entrants = this.god.getAppStore().getCompetitionEntrants(Competition.this);
+        List<? extends CompetitionEntrant> entrants = new ArrayList<>();
         Log.d("swapp.model.Competition", "Size entrants: " + entrants.size());
 
         final int numberOfHeats = (int) Math.ceil((double) entrants.size() / maxEntrants);
@@ -105,36 +110,6 @@ public class Competition implements SwaObject {
             System.out.println(heats);
         }
     }
-
-//    public Heat getHeat(int index) {
-//        return this.heatList.get(index);
-//    }
-
-//    public List<Heat> getAllHeats() {
-//        return this.heatList;
-//    }
-
-//    public boolean addHeat(Heat... heat) {
-//        return this.heatList.addAll(Arrays.asList(heat));
-//    }
-
-//    public boolean addHeats(ArrayList<Heat> heats) {
-//        return this.heatList.addAll(heats);
-//    }
-
-//    public boolean removeHeat(Heat heat) {
-//        return this.heatList.remove(heat);
-//    }
-
-//    public Heat removeHeat(int index){
-//        return this.heatList.remove(index);
-//    }
-
-//    public boolean removeHeats(List<Heat> heats) {
-//        return this.heatList.removeAll(heats);
-//    }
-
-    // TODO: implement calculateResults?
 
     @Override
     public String toString() {

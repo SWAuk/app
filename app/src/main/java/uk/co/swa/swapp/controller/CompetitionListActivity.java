@@ -53,6 +53,8 @@ public class CompetitionListActivity extends AppCompatActivity {
         this.event = this.appStore.getEvent(eventID);
         this.competitionList = this.appStore.getCompetitions(this.event);
 
+        setTitle(event.getEventName());
+
         ListView competitionListView = (ListView) findViewById(R.id.competitionsListView);
 
         this.competitionsAdapter = new SwaObjectAdapter(competitionListView.getContext(),

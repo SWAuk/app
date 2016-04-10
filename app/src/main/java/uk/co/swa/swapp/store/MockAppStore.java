@@ -113,25 +113,31 @@ public class MockAppStore implements AppStore {
     }
 
     @Override
-    public boolean addCompetition(Event event, Competition competition) {
-        boolean success = this.competitionMap.get(event).add(competition);
-
+    public boolean addCompetition(Competition competition) {
+        // get the list of Competitions for the Event the Competition is in
+        List<Competition> competitionList = this.competitionMap.get(competition.getEvent());
+        // set the appID in the competition
+        competition.setAppID(competitionList.size());
+        // add the competition to the list
+        boolean success = competitionList.add(competition);
+        // add an empty ArrayList to hold CompetitionEntrants in
         if (success) {
             this.competitionEntrantsMap.put(competition, new ArrayList<CompetitionEntrant>());
         }
 
+        // return if the add was successful or not
         return success;
     }
 
     @Override
-    public boolean removeCompetition(Event event, Competition competition) {
-        boolean sucess = this.competitionMap.get(event).remove(competition);
+    public boolean removeCompetition(Competition competition) {
+        boolean success = competitionMap.get(competition.getEvent()).remove(competition);
 
-        if (sucess) {
-            this.competitionEntrantsMap.remove(competition);
+        if (success) {
+            competitionEntrantsMap.remove(competition);
         }
 
-        return sucess;
+        return success;
     }
 
     @Override
@@ -153,13 +159,23 @@ public class MockAppStore implements AppStore {
     @Override
     public boolean addCompetitionEntrant(Competition competition,
                                          CompetitionEntrant competitionEntrant) {
-        return this.competitionEntrantsMap.get(competition).add(competitionEntrant);
+        List<CompetitionEntrant> competitionEntrantList = competitionEntrantsMap.get(competition);
+        competition.setAppID(competitionEntrantList.size());
+        return competitionEntrantList.add(competitionEntrant);
     }
 
     @Override
     public boolean addCompetitionEntrants(Competition competition,
                                           List<CompetitionEntrant> competitionEntrants) {
-        return this.competitionEntrantsMap.get(competition).addAll(competitionEntrants);
+
+        List<CompetitionEntrant> competitionEntrantList = competitionEntrantsMap.get(competition);
+
+        for (int i=0; i<competitionEntrants.size(); i++) {
+            CompetitionEntrant competitionEntrant = competitionEntrants.get(i);
+            competitionEntrant.setAppID(competitionEntrantList.size() + i);
+        }
+
+        return competitionEntrantList.addAll(competitionEntrants);
     }
 
     @Override

@@ -120,7 +120,7 @@ public class CompetitionListActivity extends AppCompatActivity {
                 CompetitionType competitionType = (CompetitionType) adapter.getItem(which);
                 Competition competition = new Competition(competitionType, event);
                 competitionsAdapter.add(competition);
-                appStore.addCompetition(event, competition);
+                appStore.addCompetition(competition);
 
                 Snackbar.make(getCurrentFocus(), competition + " added to " + event + ".",
                         Snackbar.LENGTH_LONG).setAction(null, null).show();
@@ -208,7 +208,7 @@ public class CompetitionListActivity extends AppCompatActivity {
                 Competition competition = (Competition) adapter.getItem(position);
 
                 adapter.remove(competition);
-                appStore.removeCompetition(event, competition);
+                appStore.removeCompetition(competition);
 
                 Snackbar.make(view, competition + " removed from " + event + ".",
                         Snackbar.LENGTH_LONG).setAction(null, null).show();

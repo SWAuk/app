@@ -49,12 +49,12 @@ public class SQLiteStore implements AppStore {
     }
 
     @Override
-    public boolean addCompetition(Event event, Competition competition) {
+    public boolean addCompetition( Competition competition) {
         return false;
     }
 
     @Override
-    public boolean removeCompetition(Event event, Competition competition) {
+    public boolean removeCompetition( Competition competition) {
         return false;
     }
 

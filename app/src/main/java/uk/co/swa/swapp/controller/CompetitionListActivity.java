@@ -25,9 +25,6 @@ import uk.co.swa.swapp.store.AppStore;
 
 public class CompetitionListActivity extends AppCompatActivity {
 
-    private static final int AddCompetitionRequestValue = 0;
-    private static final int EditCompetitionRequestValue = 1;
-
     private God god;
     private AppStore appStore;
     private List<Competition> competitionList;
@@ -160,7 +157,7 @@ public class CompetitionListActivity extends AppCompatActivity {
                 Log.d(getLocalClassName(), "Competition ListView Clicked, appID: " + appID);
 
                 Intent intent = new Intent(CompetitionListActivity.this,
-                        CompetitorListActivity.class);
+                        CompetitionActivity.class);
 
                 intent.putExtra("competitionID", appID);
                 startActivity(intent);
@@ -195,7 +192,7 @@ public class CompetitionListActivity extends AppCompatActivity {
                         android.R.layout.simple_list_item_1, competitionTypes);
 
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(view.getContext());
-                dialogBuilder.setTitle("Edit Competition");
+                dialogBuilder.setTitle("Change Competition Type");
                 dialogBuilder.setAdapter(adapter, onEditCompetitionClick(competition));
 
                 dialogBuilder.create().show();

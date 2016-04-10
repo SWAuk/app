@@ -13,25 +13,10 @@
     tools:context="uk.co.swa.swapp.controller.CompetitionActivity"
     tools:showIn="@layout/activity_competition">
 
-    <TextView
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/type_label"
-        android:id="@+id/typeTextView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="45dp"/>
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/typeSpinner"
-        android:spinnerMode="dropdown"
-        android:layout_alignBaseline="@+id/typeTextView"
-        android:layout_alignBottom="@+id/typeTextView"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="20dp"
-        android:layout_toEndOf="@+id/typeTextView" />
-
+        android:id="@+id/competitionMenuListView"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

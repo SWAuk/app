@@ -7,20 +7,21 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Spinner;
-
-import java.util.List;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import uk.co.swa.swapp.God;
 import uk.co.swa.swapp.R;
 import uk.co.swa.swapp.model.Competition;
-import uk.co.swa.swapp.model.CompetitionType;
 import uk.co.swa.swapp.store.AppStore;
 
 public class CompetitionActivity extends AppCompatActivity {
 
     AppStore appStore;
-    Spinner typeSpinner;
+    String[] competitionMenuItems;
+    Competition competition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,36 +33,34 @@ public class CompetitionActivity extends AppCompatActivity {
 
         this.appStore = God.getInstance().getAppStore();
 
-        List<CompetitionType> competitionTypeList = this.appStore.getCompetitionTypes();
-
         Intent intent = getIntent();
 
-        typeSpinner = (Spinner) findViewById(R.id.typeSpinner);
-        SwaObjectAdapter competitionTypeAdapter = new SwaObjectAdapter(this,
-                android.R.layout.simple_list_item_1, competitionTypeList);
+        ListView competitionMenuListView = (ListView) findViewById(R.id.competitionMenuListView);
+        this.competitionMenuItems = getResources().getStringArray(R.array.competition_menu);
+        ArrayAdapter<String> competitionMenuAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, competitionMenuItems);
 
-        typeSpinner.setAdapter(competitionTypeAdapter);
+        competitionMenuListView.setAdapter(competitionMenuAdapter);
 
         long competitionID = intent.getLongExtra("competitionID", -1);
         if (competitionID == -1) {
-            setTitle("Add Competition");
+            setTitle("Unknown Competition");
         } else {
-            setTitle("Edit Competition");
-
-            Competition competition = this.appStore.getCompetition(competitionID);
+            competition = this.appStore.getCompetition(competitionID);
             if (competition != null) {
-                typeSpinner.setSelection(competitionTypeAdapter.getPosition(
-                        competition.getCompetitionType()));
+                setTitle(competition.toString() + " Competition");
             } else {
                 Log.e(getLocalClassName(), "competitionID " + competitionID + " not found in store.");
+                setTitle("Unknown Competition");
             }
         }
+
+        competitionMenuListView.setOnItemClickListener(onCompetitionMenuItemClick());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_done, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -70,13 +69,29 @@ public class CompetitionActivity extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            case R.id.action_done:
-                this.saveCompetition();
-                onBackPressed();
-                return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return true;
+    }
+
+    public AdapterView.OnItemClickListener onCompetitionMenuItemClick() {
+        return new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i(getLocalClassName(), "competitionMenu clicked at position: " + position);
+                Log.d(getLocalClassName(), "competitionMenu click: " + competitionMenuItems[position]);
+                switch (competitionMenuItems[position]) {
+                    case "Competitors":
+                        Intent intent = new Intent(CompetitionActivity.this,
+                                CompetitorListActivity.class);
+                        intent.putExtra("competitionID", competition.getAppID());
+                        startActivity(intent);
+                        break;
+                    case "Heats":
+                        break;
+                }
+            }
+        };
     }
 
     private void saveCompetition() {

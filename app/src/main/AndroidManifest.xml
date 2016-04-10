@@ -43,7 +43,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".controller.CompetitionListActivity" />
+                android:value=".controller.CompetitionActivity" />
         </activity>
         <activity
             android:name=".controller.CompetitionActivity"

@@ -1,6 +1,10 @@
 package uk.co.swa.swapp.store;
 
+import android.widget.ListView;
+
 import java.util.List;
+
+import uk.co.swa.swapp.R;
 import uk.co.swa.swapp.model.*;
 
 /**
@@ -33,8 +37,13 @@ public interface AppStore {
     boolean removeCompetitionEntrants(Competition competition,
                                       List<CompetitionEntrant> competitionEntrants);
 
-    Heat getCompetitionHeat(long id);
-    List<Heat> getCompetitionHeats(Competition competition);
+    Round getRound(long id);
+    List<Round> getCompetitionRounds(Competition competition);
+    void addRound(Round round);
+    void removeRound(Round round);
+
+    Heat getHeat(long id);
+    List<Heat> getRoundHeats(Round round);
 
     Member getMember( long id );
     List<Member> getMembers();

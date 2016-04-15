@@ -43,6 +43,7 @@ public class CompetitionActivity extends AppCompatActivity {
         competitionMenuListView.setAdapter(competitionMenuAdapter);
 
         long competitionID = intent.getLongExtra("competitionID", -1);
+        Log.i(getLocalClassName(), "competitionID passed from calling activity: " + competitionID);
         if (competitionID == -1) {
             setTitle("Unknown Competition");
         } else {
@@ -79,20 +80,29 @@ public class CompetitionActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.i(getLocalClassName(), "competitionMenu clicked at position: " + position);
-                Log.d(getLocalClassName(), "competitionMenu click: " + competitionMenuItems[position]);
-                switch (competitionMenuItems[position]) {
+
+                String menuItem = competitionMenuItems[position];
+                Log.d(getLocalClassName(), "competitionMenu click: " + menuItem);
+
+                switch (menuItem) {
                     case "Competitors":
                         Intent intent = new Intent(CompetitionActivity.this,
                                 CompetitorListActivity.class);
                         intent.putExtra("competitionID", competition.getAppID());
                         startActivity(intent);
                         break;
-                    case "Heats":
+                    case "Rounds":
+                        intent = new Intent(CompetitionActivity.this,
+                                RoundListActivity.class);
+                        intent.putExtra("competitionID", competition.getAppID());
+                        startActivity(intent);
                         break;
                 }
             }
         };
     }
+
+
 
     private void saveCompetition() {
         Log.i(this.getLocalClassName(), "saveCompetition(): ");

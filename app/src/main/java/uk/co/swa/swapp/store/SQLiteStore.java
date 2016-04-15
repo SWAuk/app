@@ -8,6 +8,7 @@ import uk.co.swa.swapp.model.CompetitionType;
 import uk.co.swa.swapp.model.Event;
 import uk.co.swa.swapp.model.Heat;
 import uk.co.swa.swapp.model.Member;
+import uk.co.swa.swapp.model.Round;
 import uk.co.swa.swapp.model.Team;
 import uk.co.swa.swapp.model.University;
 
@@ -89,12 +90,32 @@ public class SQLiteStore implements AppStore {
     }
 
     @Override
-    public Heat getCompetitionHeat(long id) {
+    public Round getRound(long id) {
         return null;
     }
 
     @Override
-    public List<Heat> getCompetitionHeats(Competition competition) {
+    public List<Round> getCompetitionRounds(Competition competition) {
+        return null;
+    }
+
+    @Override
+    public void addRound(Round round) {
+
+    }
+
+    @Override
+    public void removeRound(Round round) {
+
+    }
+
+    @Override
+    public Heat getHeat(long id) {
+        return null;
+    }
+
+    @Override
+    public List<Heat> getRoundHeats(Round round) {
         return null;
     }
 

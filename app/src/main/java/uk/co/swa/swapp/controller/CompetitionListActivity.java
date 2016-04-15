@@ -1,15 +1,21 @@
 package uk.co.swa.swapp.controller;
 
+import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.TintResources;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -58,7 +64,7 @@ public class CompetitionListActivity extends AppCompatActivity {
         ListView competitionListView = (ListView) findViewById(R.id.competitionsListView);
 
         this.competitionsAdapter = new SwaObjectAdapter(competitionListView.getContext(),
-                        android.R.layout.simple_list_item_1, this.competitionList);
+                android.R.layout.simple_list_item_1, this.competitionList);
 
         competitionListView.setAdapter(competitionsAdapter);
 
@@ -178,7 +184,7 @@ public class CompetitionListActivity extends AppCompatActivity {
         return new OnEditDeleteDialogClick() {
             @Override
             public void onEditClicked(AdapterView<?> parent, View view,
-                                         int position, long appID) {
+                                      int position, long appID) {
                 // Get all the competition types from the AppStore.
                 List<CompetitionType> competitionTypes = appStore.getCompetitionTypes();
                 // Remove any CompetitionTypes that already exist for this event.
@@ -202,7 +208,7 @@ public class CompetitionListActivity extends AppCompatActivity {
 
             @Override
             public void onDeleteClicked(AdapterView<?> parent, View view,
-                                           int position, long appID) {
+                                        int position, long appID) {
 
                 SwaObjectAdapter adapter = (SwaObjectAdapter) parent.getAdapter();
                 Competition competition = (Competition) adapter.getItem(position);

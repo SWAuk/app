@@ -2,7 +2,7 @@
 <resources>
     <string-array name="competition_menu">
         <item>Competitors</item>
-        <item>Heats</item>
+        <item>Rounds</item>
     </string-array>
     <string-array name="edit_delete">
         <item>Edit</item>

@@ -12,6 +12,7 @@ import uk.co.swa.swapp.model.CompetitionType;
 import uk.co.swa.swapp.model.Event;
 import uk.co.swa.swapp.model.Heat;
 import uk.co.swa.swapp.model.Member;
+import uk.co.swa.swapp.model.Round;
 import uk.co.swa.swapp.model.Team;
 import uk.co.swa.swapp.model.University;
 
@@ -25,7 +26,8 @@ public class MockAppStore implements AppStore {
     List<Event> eventList;
     Map<Event, List<Competition>> competitionMap;
     Map<Competition, List<CompetitionEntrant>> competitionEntrantsMap;
-    Map<Competition, List<Heat>> competitionHeatsMap;
+    Map<Competition, List<Round>> competitionRoundsMap;
+    Map<Round, List<Heat>> roundHeatsMap;
     Map<Heat, List<CompetitionEntrant>> heatEntrantsMap;
     Map<Event, List<Member>> eventAttendeesMap;
 
@@ -43,6 +45,8 @@ public class MockAppStore implements AppStore {
         this.eventList = new ArrayList<>();
         this.competitionMap = new HashMap<>();
         this.competitionEntrantsMap = new HashMap<>();
+        this.competitionRoundsMap = new HashMap<>();
+        this.roundHeatsMap = new HashMap<>();
 
         this.populateEventList();
         this.populateCompetitionMap();
@@ -122,7 +126,8 @@ public class MockAppStore implements AppStore {
         boolean success = competitionList.add(competition);
         // add an empty ArrayList to hold CompetitionEntrants in
         if (success) {
-            this.competitionEntrantsMap.put(competition, new ArrayList<CompetitionEntrant>());
+            competitionEntrantsMap.put(competition, new ArrayList<CompetitionEntrant>());
+            competitionRoundsMap.put(competition, new ArrayList<Round>());
         }
 
         // return if the add was successful or not
@@ -135,6 +140,7 @@ public class MockAppStore implements AppStore {
 
         if (success) {
             competitionEntrantsMap.remove(competition);
+            competitionRoundsMap.remove(competition);
         }
 
         return success;
@@ -193,9 +199,39 @@ public class MockAppStore implements AppStore {
     }
 
     @Override
-    public Heat getCompetitionHeat(long id) {
-        for (List<Heat> competitionHeatsList : this.competitionHeatsMap.values()){
-            for (Heat heat : competitionHeatsList) {
+    public Round getRound(long id) {
+        for (List<Round> roundList : this.competitionRoundsMap.values()){
+            for (Round round : roundList) {
+                if (round.getAppID() == id) {
+                    return round;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<Round> getCompetitionRounds(Competition competition) {
+        return new ArrayList<>(competitionRoundsMap.get(competition));
+    }
+
+    @Override
+    public void addRound(Round round) {
+        competitionRoundsMap.get(round.getCompetition()).add(round);
+        roundHeatsMap.put(round, new ArrayList<Heat>());
+    }
+
+    @Override
+    public void removeRound(Round round) {
+        competitionEntrantsMap.get(round.getCompetition()).remove(round);
+        roundHeatsMap.remove(round);
+    }
+
+    @Override
+    public Heat getHeat(long id) {
+        for (List<Heat> heatList : this.roundHeatsMap.values()){
+            for (Heat heat : heatList) {
                 if (heat.getAppID() == id) {
                     return heat;
                 }
@@ -206,13 +242,13 @@ public class MockAppStore implements AppStore {
     }
 
     @Override
-    public List<Heat> getCompetitionHeats(Competition competition) {
-        return new ArrayList<>(this.competitionHeatsMap.get(competition));
+    public List<Heat> getRoundHeats(Round round) {
+        return new ArrayList<>(roundHeatsMap.get(round));
     }
 
     @Override
     public Member getMember(long id) {
-        for (Member member : this.memberList) {
+        for (Member member : memberList) {
             if (member.getAppID() == id) {
                 return member;
             }
@@ -223,7 +259,7 @@ public class MockAppStore implements AppStore {
 
     @Override
     public List<Member> getMembers() {
-        return new ArrayList<>(this.memberList);
+        return new ArrayList<>(memberList);
     }
 
     @Override
@@ -359,33 +395,34 @@ public class MockAppStore implements AppStore {
     private void populateCompetitionMap() {
 
         // add competitions to "Disney Presents Cardiff Wave"
-        this.competitionMap.get(getEvent(11)).add(new Competition(1, getCompetitionType(6), getEvent(11)));
+        competitionMap.get(getEvent(11)).add(new Competition(1, getCompetitionType(6), getEvent(11)));
 
         // add competitions to "Nottingham Pondlife"
-        this.competitionMap.get(getEvent(10)).add(new Competition(2, getCompetitionType(5), getEvent(10)));
+        competitionMap.get(getEvent(10)).add(new Competition(2, getCompetitionType(5), getEvent(10)));
 
 
         // foreach of the competitions add an empty ArrayList to the competitionEntrantsMap
-        for (List<Competition> competitionList : this.competitionMap.values()) {
+        for (List<Competition> competitionList : competitionMap.values()) {
             for (Competition competition : competitionList) {
-                this.competitionEntrantsMap.put(competition, new ArrayList<CompetitionEntrant>());
+                competitionEntrantsMap.put(competition, new ArrayList<CompetitionEntrant>());
+                competitionRoundsMap.put(competition, new ArrayList<Round>());
             }
         }
 
     }
 
     private void populateCompetitionEntrantMap() {
-        this.competitionEntrantsMap.get(this.getCompetition(1)).add(this.getMember(13));
-        this.competitionEntrantsMap.get(this.getCompetition(1)).add(this.getMember(7));
-        this.competitionEntrantsMap.get(this.getCompetition(1)).add(this.getMember(4));
-        this.competitionEntrantsMap.get(this.getCompetition(1)).add(this.getMember(15));
-        this.competitionEntrantsMap.get(this.getCompetition(1)).add(this.getMember(2));
-        this.competitionEntrantsMap.get(this.getCompetition(1)).add(this.getMember(11));
+        competitionEntrantsMap.get(getCompetition(1)).add(this.getMember(13));
+        competitionEntrantsMap.get(getCompetition(1)).add(this.getMember(7));
+        competitionEntrantsMap.get(getCompetition(1)).add(this.getMember(4));
+        competitionEntrantsMap.get(getCompetition(1)).add(this.getMember(15));
+        competitionEntrantsMap.get(getCompetition(1)).add(this.getMember(2));
+        competitionEntrantsMap.get(getCompetition(1)).add(this.getMember(11));
 
-        this.competitionEntrantsMap.get(this.getCompetition(2)).add(this.getTeam(1));
-        this.competitionEntrantsMap.get(this.getCompetition(2)).add(this.getTeam(3));
-        this.competitionEntrantsMap.get(this.getCompetition(2)).add(this.getTeam(5));
-        this.competitionEntrantsMap.get(this.getCompetition(2)).add(this.getTeam(4));
+        competitionEntrantsMap.get(getCompetition(2)).add(this.getTeam(1));
+        competitionEntrantsMap.get(getCompetition(2)).add(this.getTeam(3));
+        competitionEntrantsMap.get(getCompetition(2)).add(this.getTeam(5));
+        competitionEntrantsMap.get(getCompetition(2)).add(this.getTeam(4));
     }
 
     private void populateEventAttendeesMap() {

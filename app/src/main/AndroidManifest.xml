@@ -63,6 +63,33 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uk.co.swa.swapp.controller.CompetitionActivity" />
         </activity>
+        <activity
+            android:name=".controller.RoundListActivity"
+            android:label="@string/title_activity_round_list"
+            android:parentActivityName=".controller.CompetitionActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uk.co.swa.swapp.controller.CompetitionActivity" />
+        </activity>
+        <activity
+            android:name=".controller.AddEditRoundsActivity"
+            android:label="@string/title_activity_add_edit_rounds"
+            android:parentActivityName=".controller.RoundListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uk.co.swa.swapp.controller.RoundListActivity" />
+        </activity>
+        <activity
+            android:name=".controller.HeatListActivity"
+            android:label="@string/title_activity_heat_list"
+            android:parentActivityName=".controller.RoundListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uk.co.swa.swapp.controller.RoundListActivity" />
+        </activity>
     </application>
 
 </manifest>

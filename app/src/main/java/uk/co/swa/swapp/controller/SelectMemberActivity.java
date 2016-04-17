@@ -1,10 +1,15 @@
 package uk.co.swa.swapp.controller;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -22,7 +27,6 @@ public class SelectMemberActivity extends AppCompatActivity {
     List<Member> memberList;
     FilterableMemberListAdapter memberListAdapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,27 +35,27 @@ public class SelectMemberActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        this.appStore = God.getInstance().getAppStore();
+        appStore = God.getInstance().getAppStore();
 
         long competitionID = getIntent().getLongExtra("competitionID", -1);
-        Competition competition = this.appStore.getCompetition(competitionID);
+        Competition competition = appStore.getCompetition(competitionID);
 
-        this.memberList = this.appStore.getEventAttendees(competition);
+        memberList = appStore.getEventAttendees(competition);
 
         ListView entrantListView = (ListView) findViewById(R.id.entrantListView);
 
-        this.memberListAdapter = new FilterableMemberListAdapter(entrantListView.getContext(),
+        memberListAdapter = new FilterableMemberListAdapter(entrantListView.getContext(),
                 android.R.layout.simple_list_item_activated_2, memberList);
 
-        entrantListView.setAdapter(this.memberListAdapter);
+        entrantListView.setAdapter(memberListAdapter);
 
+        entrantListView.setOnItemClickListener(onMemberClicked());
 
         EditText filterEditText = (EditText) findViewById(R.id.filterEditText);
 
         filterEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
@@ -62,6 +66,28 @@ public class SelectMemberActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private AdapterView.OnItemClickListener onMemberClicked() {
+        return new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent();
+                intent.putExtra("memberID", id);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+        };
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

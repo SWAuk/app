@@ -1,5 +1,6 @@
 package uk.co.swa.swapp.controller;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -21,14 +22,19 @@ import uk.co.swa.swapp.God;
 import uk.co.swa.swapp.R;
 import uk.co.swa.swapp.model.Competition;
 import uk.co.swa.swapp.model.CompetitionEntrant;
+import uk.co.swa.swapp.model.Member;
+import uk.co.swa.swapp.model.University;
 import uk.co.swa.swapp.store.AppStore;
 
 public class CompetitorListActivity extends AppCompatActivity {
 
+    private static final int SELECT_MEMBER_REQUEST = 1;
+    private static final int SELECT_UNIVERSITY_REQUEST = 2;
+
     private AppStore appStore;
     private boolean isTeam;
     private Competition competition;
-
+    List<? extends CompetitionEntrant> competitionEntrantList;
     private ArrayAdapter competitorListAdapter;
 
     @Override
@@ -57,8 +63,7 @@ public class CompetitorListActivity extends AppCompatActivity {
         // check whether it is a team competition type or not.
         this.isTeam = competition.getCompetitionType().toString().contains("Team");
 
-        List<? extends CompetitionEntrant> competitionEntrantList =
-                this.appStore.getCompetitionEntrants(competition);
+        competitionEntrantList = this.appStore.getCompetitionEntrants(competition);
 
         ListView competitorListView = (ListView) findViewById(R.id.competitorListView);
 
@@ -108,10 +113,37 @@ public class CompetitorListActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(CompetitorListActivity.this, SelectMemberActivity.class);
                     intent.putExtra("competitionID", competition.getAppID());
-                    startActivity(intent);
+                    startActivityForResult(intent, SELECT_MEMBER_REQUEST);
                 }
             });
 
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case SELECT_MEMBER_REQUEST:
+                if (resultCode == Activity.RESULT_OK) {
+                    long memberID = data.getLongExtra("memberID", -1);
+                    Member member = appStore.getMember(memberID);
+
+                    if (!competitionEntrantList.contains(member)) {
+                        appStore.addCompetitionEntrant(competition, member);
+                        competitorListAdapter.add(member);
+                    } else {
+                        Snackbar.make(this.getCurrentFocus(), member.getName() +
+                                "is already registered for this event.",
+                                Snackbar.LENGTH_LONG).setAction(null, null).show();
+                    }
+                }
+                break;
+            case SELECT_UNIVERSITY_REQUEST:
+                if (resultCode == Activity.RESULT_OK) {
+                    long universityID = data.getLongExtra("universityID", -1);
+                    University university = appStore.getUniversity(universityID);
+                }
+                break;
         }
     }
 

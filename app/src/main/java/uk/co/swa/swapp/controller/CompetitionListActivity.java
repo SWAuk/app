@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.TintResources;
@@ -45,21 +46,23 @@ public class CompetitionListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_competition_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        this.createFloatingActionButton();
+        createFloatingActionButton();
 
-        this.god = God.getInstance();
-        this.appStore = god.getAppStore();
+        god = God.getInstance();
+        appStore = god.getAppStore();
 
         // get the eventID passed from the activity calling us
         long eventID = getIntent().getLongExtra("eventID", -1);
         Log.d(getLocalClassName(), "eventID: " + eventID);
 
-        this.event = this.appStore.getEvent(eventID);
-        this.competitionList = this.appStore.getCompetitions(this.event);
+        event = this.appStore.getEvent(eventID);
+        competitionList = this.appStore.getCompetitions(this.event);
 
         setTitle(event.getEventName());
+        actionBar.setSubtitle("Competitions");
 
         ListView competitionListView = (ListView) findViewById(R.id.competitionsListView);
 

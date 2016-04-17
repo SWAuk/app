@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -44,9 +45,13 @@ public class CompetitorListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_competitor_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         this.competition = this.appStore.getCompetition(competitionID);
+
+        setTitle(competition.getEvent().getEventName());
+        actionBar.setSubtitle(competition.toString() + " Competitors");
 
         // TODO: this seems a bit of a hack checking it contains a String?
         // check whether it is a team competition type or not.

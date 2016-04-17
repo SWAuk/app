@@ -2,6 +2,7 @@ package uk.co.swa.swapp.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -26,7 +27,8 @@ public class AddEditRoundsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_edit_heats);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         appStore = God.getInstance().getAppStore();
 
@@ -34,8 +36,17 @@ public class AddEditRoundsActivity extends AppCompatActivity {
 
         long competitionID = intent.getLongExtra("competitionID", -1);
         if (competitionID != -1) {
+
             competition = appStore.getCompetition(competitionID);
             roundNumber = intent.getIntExtra("roundNumber", -1);
+
+            if (roundNumber == -1) {
+                // Error
+            }
+
+            setTitle(competition.getEvent().getEventName());
+            actionBar.setSubtitle("Add Round");
+
         } else {
             int roundID = intent.getIntExtra("roundID", -1);
             if (roundID != -1) {

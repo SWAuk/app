@@ -20,12 +20,12 @@
         android:layout_centerHorizontal="true"
         android:maxLines="1"
         android:singleLine="true"
-        android:hint="Filter members" />
+        android:hint="@string/filter_members" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/entrantListView"
+        android:id="@+id/memberListView"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/filterEditText" />
 </RelativeLayout>

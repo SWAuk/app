@@ -42,14 +42,14 @@ public class SelectMemberActivity extends AppCompatActivity {
 
         memberList = appStore.getEventAttendees(competition);
 
-        ListView entrantListView = (ListView) findViewById(R.id.entrantListView);
+        ListView memberListView = (ListView) findViewById(R.id.memberListView);
 
-        memberListAdapter = new FilterableMemberListAdapter(entrantListView.getContext(),
-                android.R.layout.simple_list_item_activated_2, memberList);
+        memberListAdapter = new FilterableMemberListAdapter(memberListView.getContext(),
+                android.R.layout.simple_list_item_2, memberList);
 
-        entrantListView.setAdapter(memberListAdapter);
+        memberListView.setAdapter(memberListAdapter);
 
-        entrantListView.setOnItemClickListener(onMemberClicked());
+        memberListView.setOnItemClickListener(onMemberClicked());
 
         EditText filterEditText = (EditText) findViewById(R.id.filterEditText);
 

@@ -78,16 +78,10 @@ public class FilterableMemberListAdapter extends BaseAdapter implements Filterab
             holder = (ViewHolder) convertView.getTag();
         }
 
-        // TODO: Try without these lines
         holder.text1.setText(filteredData.get(position).getName());
         holder.text2.setText(filteredData.get(position).getUniversity().getUniversityName());
 
         return convertView;
-    }
-
-    private void filterMembers(CharSequence constraint) {
-
-
     }
 
     @Override

@@ -71,7 +71,7 @@ public class AddEditRoundsActivity extends AppCompatActivity {
                 return true;
             case R.id.action_done:
                 addRound();
-                onBackPressed();
+                finish();
                 return true;
         }
 

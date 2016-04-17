@@ -121,7 +121,7 @@ public class MockAppStore implements AppStore {
         // get the list of Competitions for the Event the Competition is in
         List<Competition> competitionList = this.competitionMap.get(competition.getEvent());
         // set the appID in the competition
-        competition.setAppID(competitionList.size());
+        competition.setAppID(competitionList.size() + 1);
         // add the competition to the list
         boolean success = competitionList.add(competition);
         // add an empty ArrayList to hold CompetitionEntrants in
@@ -166,7 +166,7 @@ public class MockAppStore implements AppStore {
     public boolean addCompetitionEntrant(Competition competition,
                                          CompetitionEntrant competitionEntrant) {
         List<CompetitionEntrant> competitionEntrantList = competitionEntrantsMap.get(competition);
-        competition.setAppID(competitionEntrantList.size());
+        competition.setAppID(competitionEntrantList.size() + 1);
         return competitionEntrantList.add(competitionEntrant);
     }
 
@@ -176,7 +176,7 @@ public class MockAppStore implements AppStore {
 
         List<CompetitionEntrant> competitionEntrantList = competitionEntrantsMap.get(competition);
 
-        for (int i=0; i<competitionEntrants.size(); i++) {
+        for (int i=1; i<competitionEntrants.size() + 1; i++) {
             CompetitionEntrant competitionEntrant = competitionEntrants.get(i);
             competitionEntrant.setAppID(competitionEntrantList.size() + i);
         }
@@ -218,7 +218,11 @@ public class MockAppStore implements AppStore {
 
     @Override
     public void addRound(Round round) {
-        competitionRoundsMap.get(round.getCompetition()).add(round);
+        List <Round> roundList = competitionRoundsMap.get(round.getCompetition());
+        if (round.getAppID() == -1) {
+            round.setAppID(roundList.size() + 1);
+        }
+        roundList.add(round);
         roundHeatsMap.put(round, new ArrayList<Heat>());
     }
 

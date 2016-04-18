@@ -12,16 +12,13 @@ import uk.co.swa.swapp.model.SwaObject;
  */
 public class SwaObjectAdapter extends ArrayAdapter {
 
-    private List<? extends SwaObject> swaObjects;
-
     public SwaObjectAdapter(Context context, int resource, List<? extends SwaObject> swaObjects) {
         super(context, resource, swaObjects);
-        this.swaObjects = swaObjects;
     }
 
     @Override
     public long getItemId(int position) {
-        return this.swaObjects.get(position).getAppID();
+        return ((SwaObject) getItem(position)).getAppID();
     }
 
 }

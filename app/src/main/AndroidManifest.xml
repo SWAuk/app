@@ -90,6 +90,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uk.co.swa.swapp.controller.RoundListActivity" />
         </activity>
+        <activity
+            android:name="res.layout.SelectUniversityActivity"
+            android:label="@string/title_activity_select_university"
+            android:parentActivityName=".controller.CompetitorListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uk.co.swa.swapp.controller.CompetitorListActivity" />
+        </activity>
     </application>
 
 </manifest>

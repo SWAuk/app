@@ -32,31 +32,31 @@ public class MockAppStore implements AppStore {
     Map<Event, List<Member>> eventAttendeesMap;
 
     public MockAppStore() {
-        this.competitionTypeList = new ArrayList<>();
-        this.universityList = new ArrayList<>();
-        this.memberList = new ArrayList<>();
-        this.teamList = new ArrayList<>();
+        competitionTypeList = new ArrayList<>();
+        universityList = new ArrayList<>();
+        memberList = new ArrayList<>();
+        teamList = new ArrayList<>();
 
-        this.populateCompetitionTypeList();
-        this.populateUniversityList();
-        this.populateMemberList();
-        this.populateTeamList();
+        populateCompetitionTypeList();
+        populateUniversityList();
+        populateMemberList();
+        populateTeamList();
 
-        this.eventList = new ArrayList<>();
-        this.competitionMap = new HashMap<>();
-        this.competitionEntrantsMap = new HashMap<>();
-        this.competitionRoundsMap = new HashMap<>();
-        this.roundHeatsMap = new HashMap<>();
+        eventList = new ArrayList<>();
+        competitionMap = new HashMap<>();
+        competitionEntrantsMap = new HashMap<>();
+        competitionRoundsMap = new HashMap<>();
+        roundHeatsMap = new HashMap<>();
 
-        this.populateEventList();
-        this.populateCompetitionMap();
-        this.populateCompetitionEntrantMap();
-        this.populateEventAttendeesMap();
+        populateEventList();
+        populateCompetitionMap();
+        populateCompetitionEntrantMap();
+        populateEventAttendeesMap();
     }
 
     @Override
     public Event getEvent(long id) {
-        for (Event event : this.eventList) {
+        for (Event event : eventList) {
             if (event.getAppID() == id) {
                 return event;
             }
@@ -67,24 +67,24 @@ public class MockAppStore implements AppStore {
 
     @Override
     public List<Event> getEvents() {
-        return new ArrayList<>(this.eventList);
+        return new ArrayList<>(eventList);
     }
 
     @Override
     public List<Event> getEvents(int limit) {
 
-        int size = this.eventList.size();
+        int size = eventList.size();
 
         if (limit > size) {
-            return new ArrayList<>(this.eventList);
+            return new ArrayList<>(eventList);
         } else {
-            return new ArrayList<>(this.eventList.subList(size - limit, size));
+            return new ArrayList<>(eventList.subList(size - limit, size));
         }
     }
 
     @Override
     public CompetitionType getCompetitionType(long id) {
-        for (CompetitionType competitionType : this.competitionTypeList) {
+        for (CompetitionType competitionType : competitionTypeList) {
             if (competitionType.getAppID() == id) {
                 return competitionType;
             }
@@ -95,12 +95,12 @@ public class MockAppStore implements AppStore {
 
     @Override
     public List<CompetitionType> getCompetitionTypes() {
-        return new ArrayList<>(this.competitionTypeList);
+        return new ArrayList<>(competitionTypeList);
     }
 
     @Override
     public Competition getCompetition(long id) {
-        for (List<Competition> competitionList : this.competitionMap.values()){
+        for (List<Competition> competitionList : competitionMap.values()){
             for (Competition competition : competitionList) {
                 if (competition.getAppID() == id) {
                     return competition;
@@ -113,13 +113,13 @@ public class MockAppStore implements AppStore {
 
     @Override
     public List<Competition> getCompetitions(Event event) {
-        return new ArrayList<>(this.competitionMap.get(event));
+        return new ArrayList<>(competitionMap.get(event));
     }
 
     @Override
     public boolean addCompetition(Competition competition) {
         // get the list of Competitions for the Event the Competition is in
-        List<Competition> competitionList = this.competitionMap.get(competition.getEvent());
+        List<Competition> competitionList = competitionMap.get(competition.getEvent());
         // set the appID in the competition
         competition.setAppID(competitionList.size() + 1);
         // add the competition to the list
@@ -148,7 +148,7 @@ public class MockAppStore implements AppStore {
 
     @Override
     public CompetitionEntrant getCompetitionEntrant(Competition competition, long id) {
-        for (CompetitionEntrant competitionEntrant : this.competitionEntrantsMap.get(competition)) {
+        for (CompetitionEntrant competitionEntrant : competitionEntrantsMap.get(competition)) {
             if (competitionEntrant.getAppID() == id) {
                 return competitionEntrant;
             }
@@ -159,14 +159,23 @@ public class MockAppStore implements AppStore {
 
     @Override
     public List<? extends CompetitionEntrant> getCompetitionEntrants(Competition competition) {
-        return new ArrayList<>(this.competitionEntrantsMap.get(competition));
+        return new ArrayList<>(competitionEntrantsMap.get(competition));
     }
 
     @Override
     public boolean addCompetitionEntrant(Competition competition,
                                          CompetitionEntrant competitionEntrant) {
         List<CompetitionEntrant> competitionEntrantList = competitionEntrantsMap.get(competition);
-        competition.setAppID(competitionEntrantList.size() + 1);
+        if (competitionEntrant.getAppID() == -1) {
+            if (competitionEntrant instanceof Team) {
+                competitionEntrant.setAppID(teamList.size() + 1);
+                teamList.add((Team) competitionEntrant);
+            } else if (competitionEntrant instanceof Member) {
+                competitionEntrant.setAppID(memberList.size() + 1);
+                memberList.add((Member) competitionEntrant);
+            }
+        }
+
         return competitionEntrantList.add(competitionEntrant);
     }
 
@@ -188,19 +197,19 @@ public class MockAppStore implements AppStore {
     public boolean removeCompetitionEntrant(Competition competition,
                                             CompetitionEntrant competitionEntrant) {
 
-        return this.competitionEntrantsMap.get(competition).remove(competitionEntrant);
+        return competitionEntrantsMap.get(competition).remove(competitionEntrant);
     }
 
     @Override
     public boolean removeCompetitionEntrants(Competition competition,
                                              List<CompetitionEntrant> competitionEntrants) {
 
-        return this.competitionEntrantsMap.get(competition).removeAll(competitionEntrants);
+        return competitionEntrantsMap.get(competition).removeAll(competitionEntrants);
     }
 
     @Override
     public Round getRound(long id) {
-        for (List<Round> roundList : this.competitionRoundsMap.values()){
+        for (List<Round> roundList : competitionRoundsMap.values()){
             for (Round round : roundList) {
                 if (round.getAppID() == id) {
                     return round;
@@ -234,7 +243,7 @@ public class MockAppStore implements AppStore {
 
     @Override
     public Heat getHeat(long id) {
-        for (List<Heat> heatList : this.roundHeatsMap.values()){
+        for (List<Heat> heatList : roundHeatsMap.values()){
             for (Heat heat : heatList) {
                 if (heat.getAppID() == id) {
                     return heat;
@@ -268,7 +277,7 @@ public class MockAppStore implements AppStore {
 
     @Override
     public University getUniversity(long id) {
-        for (University university : this.universityList) {
+        for (University university : universityList) {
             if (university.getAppID() == id) {
                 return university;
             }
@@ -279,12 +288,12 @@ public class MockAppStore implements AppStore {
 
     @Override
     public List<University> getUniversities() {
-        return new ArrayList<>(this.universityList);
+        return new ArrayList<>(universityList);
     }
 
     @Override
     public Team getTeam(long id) {
-        for (Team team : this.teamList) {
+        for (Team team : teamList) {
             if (team.getAppID() == id) {
                 return team;
             }
@@ -295,104 +304,103 @@ public class MockAppStore implements AppStore {
 
     @Override
     public List<Team> getTeams() {
-        return new ArrayList<>(this.teamList);
+        return new ArrayList<>(teamList);
     }
 
     @Override
     public List<Member> getEventAttendees(Event event) {
         // TODO: implement properly
-        // return this.eventAttendeesMap.get(event);
-        return this.memberList;
+        // return eventAttendeesMap.get(event);
+        return memberList;
     }
 
     @Override
     public List<Member> getEventAttendees(Competition competition) {
-        for (Event event : this.competitionMap.keySet()) {
-            if (this.competitionMap.get(event).equals(competition)) {
-                return this.getEventAttendees(event);
+        for (Event event : competitionMap.keySet()) {
+            if (competitionMap.get(event).equals(competition)) {
+                return getEventAttendees(event);
             }
         }
 
         // TODO: implement properly
-        // return null;
-        return this.memberList;
+        return memberList;
     }
 
 
     private void populateCompetitionTypeList() {
-        this.competitionTypeList.add(new CompetitionType(1, "Beginner"));
-        this.competitionTypeList.add(new CompetitionType(2, "Intermediate"));
-        this.competitionTypeList.add(new CompetitionType(3, "Advanced"));
-        this.competitionTypeList.add(new CompetitionType(4, "Freestyle"));
-        this.competitionTypeList.add(new CompetitionType(5, "Team"));
-        this.competitionTypeList.add(new CompetitionType(6, "Wave"));
+        competitionTypeList.add(new CompetitionType(1, "Beginner"));
+        competitionTypeList.add(new CompetitionType(2, "Intermediate"));
+        competitionTypeList.add(new CompetitionType(3, "Advanced"));
+        competitionTypeList.add(new CompetitionType(4, "Freestyle"));
+        competitionTypeList.add(new CompetitionType(5, "Team"));
+        competitionTypeList.add(new CompetitionType(6, "Wave"));
     }
 
     private void populateUniversityList() {
-        this.universityList.add(new University(1, "Bangor"));
-        this.universityList.add(new University(2, "Birmingham"));
-        this.universityList.add(new University(3, "Bristol"));
-        this.universityList.add(new University(4, "Cardiff"));
-        this.universityList.add(new University(5, "Exeter"));
-        this.universityList.add(new University(6, "Imperial"));
-        this.universityList.add(new University(7, "Leeds"));
-        this.universityList.add(new University(8, "Liverpool"));
-        this.universityList.add(new University(9, "Newcastle"));
-        this.universityList.add(new University(10, "Nottingham"));
-        this.universityList.add(new University(11, "Plymouth"));
-        this.universityList.add(new University(12, "Southampton"));
-        this.universityList.add(new University(13, "Southampton Solent"));
-        this.universityList.add(new University(14, "UEA"));
-        this.universityList.add(new University(15, "UWE"));
+        universityList.add(new University(1, "Bangor"));
+        universityList.add(new University(2, "Birmingham"));
+        universityList.add(new University(3, "Bristol"));
+        universityList.add(new University(4, "Cardiff"));
+        universityList.add(new University(5, "Exeter"));
+        universityList.add(new University(6, "Imperial"));
+        universityList.add(new University(7, "Leeds"));
+        universityList.add(new University(8, "Liverpool"));
+        universityList.add(new University(9, "Newcastle"));
+        universityList.add(new University(10, "Nottingham"));
+        universityList.add(new University(11, "Plymouth"));
+        universityList.add(new University(12, "Southampton"));
+        universityList.add(new University(13, "Southampton Solent"));
+        universityList.add(new University(14, "UEA"));
+        universityList.add(new University(15, "UWE"));
     }
 
     private void populateMemberList() {
-        this.memberList.add(new Member(1, "Adam Franklin", this.getUniversity(15)));
-        this.memberList.add(new Member(2, "Ollie Johnson", this.getUniversity(15)));
-        this.memberList.add(new Member(3, "Roisin Irish", this.getUniversity(15)));
-        this.memberList.add(new Member(4, "Kate Simpson", this.getUniversity(15)));
-        this.memberList.add(new Member(5, "Ben Jones", this.getUniversity(15)));
-        this.memberList.add(new Member(6, "Jane Janerson", this.getUniversity(8)));
-        this.memberList.add(new Member(7, "Olives Are-Cool", this.getUniversity(8)));
-        this.memberList.add(new Member(8, "Jenny Bradford", this.getUniversity(8)));
-        this.memberList.add(new Member(9, "Larry Page", this.getUniversity(3)));
-        this.memberList.add(new Member(10, "Louis LaLa", this.getUniversity(3)));
-        this.memberList.add(new Member(11, "Ben Smith", this.getUniversity(12)));
-        this.memberList.add(new Member(12, "Jack Jackson", this.getUniversity(5)));
-        this.memberList.add(new Member(13, "Sam Sampson", this.getUniversity(12)));
-        this.memberList.add(new Member(14, "Adam Small", this.getUniversity(5)));
-        this.memberList.add(new Member(15, "Ann Anderson", this.getUniversity(5)));
-        this.memberList.add(new Member(16, "Anthony Ant", this.getUniversity(8)));
+        memberList.add(new Member(1, "Adam Franklin", getUniversity(15)));
+        memberList.add(new Member(2, "Ollie Johnson", getUniversity(15)));
+        memberList.add(new Member(3, "Roisin Irish", getUniversity(15)));
+        memberList.add(new Member(4, "Kate Simpson", getUniversity(15)));
+        memberList.add(new Member(5, "Ben Jones", getUniversity(15)));
+        memberList.add(new Member(6, "Jane Janerson", getUniversity(8)));
+        memberList.add(new Member(7, "Olives Are-Cool", getUniversity(8)));
+        memberList.add(new Member(8, "Jenny Bradford", getUniversity(8)));
+        memberList.add(new Member(9, "Larry Page", getUniversity(3)));
+        memberList.add(new Member(10, "Louis LaLa", getUniversity(3)));
+        memberList.add(new Member(11, "Ben Smith", getUniversity(12)));
+        memberList.add(new Member(12, "Jack Jackson", getUniversity(5)));
+        memberList.add(new Member(13, "Sam Sampson", getUniversity(12)));
+        memberList.add(new Member(14, "Adam Small", getUniversity(5)));
+        memberList.add(new Member(15, "Ann Anderson", getUniversity(5)));
+        memberList.add(new Member(16, "Anthony Ant", getUniversity(8)));
     }
 
     private void populateTeamList() {
-        this.teamList.add(new Team(1, this.getUniversity(7), 1));
-        this.teamList.add(new Team(2, this.getUniversity(4), 1));
-        this.teamList.add(new Team(3, this.getUniversity(12), 1));
-        this.teamList.add(new Team(4, this.getUniversity(12), 2));
-        this.teamList.add(new Team(5, this.getUniversity(15), 1));
+        teamList.add(new Team(1, getUniversity(7), 1));
+        teamList.add(new Team(2, getUniversity(4), 1));
+        teamList.add(new Team(3, getUniversity(12), 1));
+        teamList.add(new Team(4, getUniversity(12), 2));
+        teamList.add(new Team(5, getUniversity(15), 1));
     }
 
     private void populateEventList() {
 
         // 2014/15
-        this.eventList.add(new Event(6, "BUCS Nationals", new Date()));
-        this.eventList.add(new Event(5, "Nottingham", new Date()));
-        this.eventList.add(new Event(4, "Cardiff", new Date()));
-        this.eventList.add(new Event(3, "Bangor", new Date()));
-        this.eventList.add(new Event(2, "PlymEx", new Date()));
-        this.eventList.add(new Event(1, "BrUWE", new Date()));
+        eventList.add(new Event(6, "BUCS Nationals", new Date()));
+        eventList.add(new Event(5, "Nottingham", new Date()));
+        eventList.add(new Event(4, "Cardiff", new Date()));
+        eventList.add(new Event(3, "Bangor", new Date()));
+        eventList.add(new Event(2, "PlymEx", new Date()));
+        eventList.add(new Event(1, "BrUWE", new Date()));
 
         // 2015/16
-        this.eventList.add(new Event(11, "Disney Presents Cardiff Wave", new Date()));
-        this.eventList.add(new Event(10, "Nottingham Pondlife", new Date()));
-        this.eventList.add(new Event(9, "BrUWE Wet Dreams", new Date()));
-        this.eventList.add(new Event(8, "Bangor", new Date()));
-        this.eventList.add(new Event(7, "Up the Brum!", new Date()));
+        eventList.add(new Event(11, "Disney Presents Cardiff Wave", new Date()));
+        eventList.add(new Event(10, "Nottingham Pondlife", new Date()));
+        eventList.add(new Event(9, "BrUWE Wet Dreams", new Date()));
+        eventList.add(new Event(8, "Bangor", new Date()));
+        eventList.add(new Event(7, "Up the Brum!", new Date()));
 
         // foreach of the events add an empty ArrayList to the competitionMap
-        for (Event event : this.eventList) {
-            this.competitionMap.put(event, new ArrayList<Competition>());
+        for (Event event : eventList) {
+            competitionMap.put(event, new ArrayList<Competition>());
         }
     }
 
@@ -416,17 +424,17 @@ public class MockAppStore implements AppStore {
     }
 
     private void populateCompetitionEntrantMap() {
-        competitionEntrantsMap.get(getCompetition(1)).add(this.getMember(13));
-        competitionEntrantsMap.get(getCompetition(1)).add(this.getMember(7));
-        competitionEntrantsMap.get(getCompetition(1)).add(this.getMember(4));
-        competitionEntrantsMap.get(getCompetition(1)).add(this.getMember(15));
-        competitionEntrantsMap.get(getCompetition(1)).add(this.getMember(2));
-        competitionEntrantsMap.get(getCompetition(1)).add(this.getMember(11));
+        competitionEntrantsMap.get(getCompetition(1)).add(getMember(13));
+        competitionEntrantsMap.get(getCompetition(1)).add(getMember(7));
+        competitionEntrantsMap.get(getCompetition(1)).add(getMember(4));
+        competitionEntrantsMap.get(getCompetition(1)).add(getMember(15));
+        competitionEntrantsMap.get(getCompetition(1)).add(getMember(2));
+        competitionEntrantsMap.get(getCompetition(1)).add(getMember(11));
 
-        competitionEntrantsMap.get(getCompetition(2)).add(this.getTeam(1));
-        competitionEntrantsMap.get(getCompetition(2)).add(this.getTeam(3));
-        competitionEntrantsMap.get(getCompetition(2)).add(this.getTeam(5));
-        competitionEntrantsMap.get(getCompetition(2)).add(this.getTeam(4));
+        competitionEntrantsMap.get(getCompetition(2)).add(getTeam(1));
+        competitionEntrantsMap.get(getCompetition(2)).add(getTeam(3));
+        competitionEntrantsMap.get(getCompetition(2)).add(getTeam(5));
+        competitionEntrantsMap.get(getCompetition(2)).add(getTeam(4));
     }
 
     private void populateEventAttendeesMap() {

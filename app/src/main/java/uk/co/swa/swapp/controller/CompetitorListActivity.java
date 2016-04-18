@@ -13,16 +13,17 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.List;
 
+import res.layout.SelectUniversityActivity;
 import uk.co.swa.swapp.God;
 import uk.co.swa.swapp.R;
 import uk.co.swa.swapp.model.Competition;
 import uk.co.swa.swapp.model.CompetitionEntrant;
 import uk.co.swa.swapp.model.Member;
+import uk.co.swa.swapp.model.Team;
 import uk.co.swa.swapp.model.University;
 import uk.co.swa.swapp.store.AppStore;
 
@@ -35,44 +36,43 @@ public class CompetitorListActivity extends AppCompatActivity {
     private boolean isTeam;
     private Competition competition;
     List<? extends CompetitionEntrant> competitionEntrantList;
-    private ArrayAdapter competitorListAdapter;
+    private SwaObjectAdapter competitorListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
-        this.appStore = God.getInstance().getAppStore();
-
-        // get the competitionID passed from the activity calling us
-        long competitionID = getIntent().getLongExtra("competitionID", -1);
-        Log.d(getLocalClassName(), "competitionID: " + competitionID);
-
         setContentView(R.layout.activity_competitor_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        this.competition = this.appStore.getCompetition(competitionID);
+        appStore = God.getInstance().getAppStore();
+
+        // get the competitionID passed from the activity calling us
+        long competitionID = getIntent().getLongExtra("competitionID", -1);
+        Log.d(getLocalClassName(), "competitionID: " + competitionID);
+
+        competition = appStore.getCompetition(competitionID);
 
         setTitle(competition.getEvent().getEventName());
         actionBar.setSubtitle(competition.toString() + " Competitors");
 
         // TODO: this seems a bit of a hack checking it contains a String?
         // check whether it is a team competition type or not.
-        this.isTeam = competition.getCompetitionType().toString().contains("Team");
+        isTeam = competition.getCompetitionType().toString().contains("Team");
 
         competitionEntrantList = this.appStore.getCompetitionEntrants(competition);
 
         ListView competitorListView = (ListView) findViewById(R.id.competitorListView);
 
-        this.competitorListAdapter = new SwaObjectAdapter(competitorListView.getContext(),
+        competitorListAdapter = new SwaObjectAdapter(competitorListView.getContext(),
                 android.R.layout.simple_list_item_1, competitionEntrantList);
 
         competitorListView.setAdapter(competitorListAdapter);
 
-        this.setupFloatingActionButton();
+        setupFloatingActionButton();
         competitorListView.setOnItemClickListener(this.onCompetitorListItemClick());
         competitorListView.setOnItemLongClickListener(this.onCompetitorListItemLongClick());
 
@@ -101,8 +101,10 @@ public class CompetitorListActivity extends AppCompatActivity {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Snackbar.make(view, "Add team not implemented yet...", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    Intent intent = new Intent(CompetitorListActivity.this,
+                            SelectUniversityActivity.class);
+                    intent.putExtra("competitionID", competition.getAppID());
+                    startActivityForResult(intent, SELECT_UNIVERSITY_REQUEST);
                 }
             });
 
@@ -111,7 +113,8 @@ public class CompetitorListActivity extends AppCompatActivity {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(CompetitorListActivity.this, SelectMemberActivity.class);
+                    Intent intent = new Intent(CompetitorListActivity.this,
+                            SelectMemberActivity.class);
                     intent.putExtra("competitionID", competition.getAppID());
                     startActivityForResult(intent, SELECT_MEMBER_REQUEST);
                 }
@@ -131,18 +134,38 @@ public class CompetitorListActivity extends AppCompatActivity {
                     if (!competitionEntrantList.contains(member)) {
                         appStore.addCompetitionEntrant(competition, member);
                         competitorListAdapter.add(member);
+
+                        Snackbar.make(getCurrentFocus(), member.getName() +
+                                        " registered for the " + competition.toString() +
+                                " competition.", Snackbar.LENGTH_LONG).setAction(null, null).show();
                     } else {
-                        Snackbar.make(this.getCurrentFocus(), member.getName() +
-                                "is already registered for this event.",
-                                Snackbar.LENGTH_LONG).setAction(null, null).show();
+                        Snackbar.make(getCurrentFocus(), member.getName() +
+                                " is already registered for the " + competition.toString() +
+                                " competition.", Snackbar.LENGTH_LONG).setAction(null, null).show();
                     }
                 }
+
                 break;
+
             case SELECT_UNIVERSITY_REQUEST:
                 if (resultCode == Activity.RESULT_OK) {
                     long universityID = data.getLongExtra("universityID", -1);
                     University university = appStore.getUniversity(universityID);
+
+                    int teamNumber = 1;
+                    for (Team t : (List<Team>) competitionEntrantList) {
+                        if (t.getUniversity() == university) teamNumber++;
+                    }
+
+                    Team team = new Team(university, teamNumber);
+
+                    appStore.addCompetitionEntrant(competition, team);
+                    competitorListAdapter.add(team);
+
+                    Snackbar.make(getCurrentFocus(), team.getName() + " registered.",
+                            Snackbar.LENGTH_LONG).setAction(null, null).show();
                 }
+                
                 break;
         }
     }
@@ -170,9 +193,9 @@ public class CompetitorListActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onDeleteClicked(AdapterView<?> parent, View view, int position, long appID) {
+            public void onDeleteClicked(AdapterView<?> parent, View view, int position, long id) {
                 CompetitionEntrant competitionEntrant =
-                        appStore.getCompetitionEntrant(competition, appID);
+                        appStore.getCompetitionEntrant(competition, id);
                 competitorListAdapter.remove(competitionEntrant);
                 appStore.removeCompetitionEntrant(competition, competitionEntrant);
 

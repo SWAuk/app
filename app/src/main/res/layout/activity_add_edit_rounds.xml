@@ -21,6 +21,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_add_edit_heats" />
+    <include layout="@layout/content_add_edit_rounds" />
 
 </android.support.design.widget.CoordinatorLayout>

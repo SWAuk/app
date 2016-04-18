@@ -1,14 +1,12 @@
 package uk.co.swa.swapp.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Round implements SwaObject {
 
     long appID;
     Competition competition;
     int roundNumber;
     int duration;
+    int maxCompetitors;
     boolean finalRound;
 //    List<Heat> heatList;
 
@@ -16,11 +14,13 @@ public class Round implements SwaObject {
                  Competition competition,
                  int roundNumber,
                  int duration,
+                 int maxCompetitors,
 //                 List<Heat> heats,
                  boolean finalRound) {
         this.appID = appID;
         this.competition = competition;
         this.duration = duration;
+        this.maxCompetitors = maxCompetitors;
         this.roundNumber = roundNumber;
 //        this.heatList = heats;
         this.finalRound = finalRound;
@@ -29,24 +29,9 @@ public class Round implements SwaObject {
     public Round(Competition competition,
                  int roundNumber,
                  int duration,
-                 List<Heat> heats,
+                 int maxCompetitors,
                  boolean finalRound) {
-        this(-1, competition, duration, roundNumber, /*heats,*/ finalRound);
-    }
-
-    public Round(Competition competition,
-                 int roundNumber,
-                 int duration,
-                 List<Heat> heats) {
-        this(-1, competition, duration, roundNumber, /*heats,*/ false);
-    }
-
-    public Round(Competition competition, int roundNumber, int duration, boolean finalRound) {
-        this(-1, competition, roundNumber, duration, /*new ArrayList<Heat>(),*/ finalRound);
-    }
-
-    public Round(Competition competition, int roundNumber, int duration) {
-        this(-1, competition, roundNumber, duration, /*new ArrayList<Heat>(),*/ false);
+        this(-1, competition, roundNumber, duration, maxCompetitors, finalRound);
     }
 
     @Override
@@ -67,6 +52,14 @@ public class Round implements SwaObject {
         this.competition = competition;
     }
 
+    public int getRoundNumber() {
+        return roundNumber;
+    }
+
+    public void setRoundNumber(int roundNumber) {
+        this.roundNumber = roundNumber;
+    }
+
 //    public List<Heat> getHeats() {
 //        return heatList;
 //    }
@@ -83,12 +76,12 @@ public class Round implements SwaObject {
         this.duration = duration;
     }
 
-    public int getRoundNumber() {
-        return roundNumber;
+    public int getMaxCompetitors() {
+        return maxCompetitors;
     }
 
-    public void setRoundNumber(int roundNumber) {
-        this.roundNumber = roundNumber;
+    public void setMaxCompetitors(int maxCompetitors) {
+        this.maxCompetitors = maxCompetitors;
     }
 
     public boolean isFinalRound() {

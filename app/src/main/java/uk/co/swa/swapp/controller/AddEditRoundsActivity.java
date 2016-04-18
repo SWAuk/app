@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import uk.co.swa.swapp.God;
@@ -24,7 +25,7 @@ public class AddEditRoundsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_edit_heats);
+        setContentView(R.layout.activity_add_edit_rounds);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -79,9 +80,16 @@ public class AddEditRoundsActivity extends AppCompatActivity {
     }
 
     private void addRound() {
-        String durationStr = ((TextView)findViewById(R.id.durationEditText)).getText().toString();
+        String durationStr = ((TextView) findViewById(R.id.durationEditText)).getText().toString();
         int duration = Integer.parseInt(durationStr);
-        Round round = new Round(competition, roundNumber, duration, false);
+
+        String maxCompetitorsStr =
+                ((TextView) findViewById(R.id.maxCompetitorsEditText)).getText().toString();
+        int maxCompetitors = Integer.parseInt(maxCompetitorsStr);
+
+        boolean finalRound = ((Switch) findViewById(R.id.finalSwitch)).isChecked();
+
+        Round round = new Round(competition, roundNumber, duration, maxCompetitors, finalRound);
         appStore.addRound(round);
     }
 }

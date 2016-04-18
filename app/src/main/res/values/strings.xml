@@ -23,4 +23,5 @@
     <string name="max_competitors_label">Max Competitors</string>
     <string name="filter_universities">Filter universities</string>
     <string name="filter_members">Filter members</string>
+    <string name="final_round_label">Final round?</string>
 </resources>
